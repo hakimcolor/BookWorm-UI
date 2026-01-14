@@ -2,7 +2,7 @@ import React from 'react'
 
 const ModerateReviews = () => {
   return (
-    <div>
+    <div className=''>
       Pending reviews list ,, adn approve /delete ok  if admin approve then review visible to all users ok ... can you understand ok .... fine 
     </div>
   )

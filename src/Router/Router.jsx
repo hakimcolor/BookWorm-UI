@@ -7,72 +7,132 @@ import ManageGenress from '../Pages/Admin/ManageGenress';
 import ManageTutorials from '../Pages/Admin/ManageTutorials';
 import ManageUsers from '../Pages/Admin/ManageUsers';
 import ModerateReviews from '../Pages/Admin/ModerateReviews';
-import UserRoot from '../Layout/UserRoot';
 import BrowseBooksPage from '../Pages/User/BrowseBooksPage';
 import DetailsBookpage from '../Pages/User/DetailsBookpage';
 import MyLibrary from '../Pages/User/MyLibrary';
 import Recomendations from '../Pages/User/Recomendations';
 import Tutorials from '../Pages/User/Tutorials';
+import SignUp from '../Pages/SingUP';
+import SignIn from '../Pages/SingIn';
+import PrivateRoute from './PrivateRoute';
+import AdminRoute from './AdminRoute';
+
+
 export const router = createBrowserRouter([
+  // Admin Routes
   {
     path: '/admin',
     element: <Root />,
     children: [
       {
         index: true,
-        element: <AdminDashbord />,
+        element: (
+          <AdminRoute>
+            <AdminDashbord />
+          </AdminRoute>
+        ),
       },
       {
         path: 'managebook',
-        element: <ManageBook />,
+        element: (
+          <AdminRoute>
+            <ManageBook />
+          </AdminRoute>
+        ),
       },
-
       {
         path: 'managegenress',
-        element: <ManageGenress />,
+        element: (
+          <AdminRoute>
+            <ManageGenress />
+          </AdminRoute>
+        ),
       },
       {
         path: 'managetutorials',
-        element: <ManageTutorials />,
+        element: (
+          <AdminRoute>
+            <ManageTutorials />
+          </AdminRoute>
+        ),
       },
       {
         path: 'manageusers',
-        element: <ManageUsers />,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: 'moderatereviews',
-        elementk: <ModerateReviews />,
+        element: (
+          <AdminRoute>
+            <ModerateReviews />
+          </AdminRoute>
+        ),
       },
     ],
   },
+
+  // User Routes (Protected)
   {
     path: '/',
-    element: <UserRoot />,
+    element: <Root />,
     children: [
       {
         index: true,
-        element: <HOme />,
+        element: (
+          <PrivateRoute>
+            <HOme />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'browsebookspage',
-        element: <BrowseBooksPage />,
+        element: (
+          <PrivateRoute>
+            <BrowseBooksPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'detailsbookpage/:id',
-        element: <DetailsBookpage />,
+        element: (
+          <PrivateRoute>
+            <DetailsBookpage />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'mylibrary',
-        element: <MyLibrary />,
+        element: (
+          <PrivateRoute>
+            <MyLibrary />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'recomendations',
-        element: <Recomendations />,
+        element: (
+          <PrivateRoute>
+            <Recomendations />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'tutorials',
-        element: <Tutorials />,
+        element: (
+          <PrivateRoute>
+            <Tutorials />
+          </PrivateRoute>
+        ),
       },
     ],
   },
+
+  // Public Routes
+  { path: 'signup', element: <SignUp /> },
+  { path: 'signin', element: <SignIn /> },
+  { path: 'admin/signup', element: <SignUp /> },
 ]);
