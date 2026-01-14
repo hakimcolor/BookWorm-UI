@@ -35,7 +35,7 @@ const ManageBook = ({ onAddSuccess }) => {
   // Fetch books
   const fetchBooks = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/books');
+      const res = await axios.get('https://book-worm-surversite.vercel.app/books');
       setBooks(res.data);
     } catch (error) {
       console.error('Error fetching books:', error);
@@ -128,7 +128,7 @@ const ManageBook = ({ onAddSuccess }) => {
 
       if (editingBook) {
         const res = await axios.put(
-          `http://localhost:3000/books/${editingBook._id}`,
+          `https://book-worm-surversite.vercel.app/books/${editingBook._id}`,
           bookData
         );
         if (res.data.success) {
@@ -138,7 +138,7 @@ const ManageBook = ({ onAddSuccess }) => {
           alert('Update failed: ' + res.data.message);
         }
       } else {
-        const res = await axios.post('http://localhost:3000/books', bookData);
+        const res = await axios.post('https://book-worm-surversite.vercel.app/books', bookData);
         if (res.data.success || res.status === 200) {
           alert('Book added successfully!');
         } else {
@@ -161,7 +161,7 @@ const ManageBook = ({ onAddSuccess }) => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this book?')) return;
     try {
-      const res = await axios.delete(`http://localhost:3000/books/${id}`);
+      const res = await axios.delete(`https://book-worm-surversite.vercel.app/books/${id}`);
       if (res.data.success) {
         alert('Book deleted successfully!');
         fetchBooks();
