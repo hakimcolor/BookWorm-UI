@@ -1,7 +1,5 @@
-import { useRef, Suspense, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Stars, OrbitControls, Text3D, Center } from '@react-three/drei';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   FaBook,
@@ -17,79 +15,132 @@ import {
   FaBell,
 } from 'react-icons/fa';
 
-/* ─────────────────── 3D COMPONENTS ─────────────────── */
+/* ─────────────────── CSS 3D BOOK ─────────────────── */
 
-function Book3D({ position, color, rotation, scale = 1 }) {
-  const group = useRef();
-  useFrame((state) => {
-    group.current.rotation.y = state.clock.elapsedTime * 0.35 + rotation;
-    group.current.position.y =
-      position[1] + Math.sin(state.clock.elapsedTime * 0.7 + rotation) * 0.15;
-  });
+function AnimatedBook({ scrollY }) {
+  // scroll-driven transforms
+  const scale = useTransform(scrollY, [0, 400], [1, 0.35]);
+  const x = useTransform(scrollY, [0, 400], [0, 320]);
+  const y = useTransform(scrollY, [0, 400], [0, 160]);
+  const rotateY = useTransform(scrollY, [0, 400], ['-20deg', '30deg']);
+  const opacity = useTransform(scrollY, [300, 420], [1, 0]);
+
+  const springScale = useSpring(scale, { stiffness: 80, damping: 20 });
+  const springX = useSpring(x, { stiffness: 80, damping: 20 });
+  const springY = useSpring(y, { stiffness: 80, damping: 20 });
+
   return (
-    <group ref={group} position={position} scale={scale}>
-      {/* Cover */}
-      <mesh castShadow position={[0, 0, 0]}>
-        <boxGeometry args={[0.75, 1.1, 0.12]} />
-        <meshStandardMaterial color={color} roughness={0.3} metalness={0.15} />
-      </mesh>
-      {/* Spine */}
-      <mesh position={[-0.375, 0, 0]}>
-        <boxGeometry args={[0.05, 1.1, 0.12]} />
-        <meshStandardMaterial color={color} roughness={0.2} metalness={0.2} />
-      </mesh>
-      {/* Pages */}
-      <mesh position={[0.04, 0, 0]}>
-        <boxGeometry args={[0.67, 1.05, 0.1]} />
-        <meshStandardMaterial color="#FDF6EC" roughness={0.8} />
-      </mesh>
-    </group>
+    <motion.div
+      style={{
+        scale: springScale,
+        x: springX,
+        y: springY,
+        opacity,
+        perspective: '800px',
+        transformStyle: 'preserve-3d',
+      }}
+      className="relative w-48 h-64 cursor-pointer"
+    >
+      {/* Floating glow */}
+      <motion.div
+        animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
+        transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+        className="absolute inset-0 rounded-xl blur-2xl bg-primary/30 -z-10"
+      />
+
+      {/* Book wrapper — rotates on hover + floats */}
+      <motion.div
+        animate={{ rotateY: [-8, 8, -8], y: [0, -12, 0] }}
+        transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+        style={{ transformStyle: 'preserve-3d', rotateY }}
+        className="w-full h-full relative"
+        whileHover={{ rotateY: 15 }}
+      >
+        {/* Front cover */}
+        <div
+          className="absolute inset-0 rounded-r-lg rounded-l-sm flex flex-col items-center justify-center overflow-hidden shadow-2xl"
+          style={{
+            background: 'linear-gradient(160deg, #8B4513 0%, #2C1810 100%)',
+            backfaceVisibility: 'hidden',
+          }}
+        >
+          {/* Gold border decoration */}
+          <div className="absolute inset-2 border border-[#D4AF37]/40 rounded pointer-events-none" />
+          <div className="absolute inset-4 border border-[#D4AF37]/20 rounded pointer-events-none" />
+
+          {/* Embossed icon */}
+          <motion.div
+            animate={{ scale: [1, 1.08, 1] }}
+            transition={{ repeat: Infinity, duration: 2.5 }}
+            className="text-[#D4AF37]/80 mb-3"
+          >
+            <FaBookOpen size={40} />
+          </motion.div>
+          <p
+            className="font-heading text-[#FDF6EC]/90 text-base font-bold text-center px-4 leading-tight"
+            style={{ fontFamily: 'Playfair Display, serif' }}
+          >
+            BookWorm
+          </p>
+          <p className="text-[#D4AF37]/70 text-xs mt-1 tracking-widest uppercase">
+            Library
+          </p>
+
+          {/* Shine sweep */}
+          <motion.div
+            animate={{ x: ['-100%', '200%'] }}
+            transition={{ repeat: Infinity, duration: 3, repeatDelay: 2 }}
+            className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 pointer-events-none"
+          />
+        </div>
+
+        {/* Spine */}
+        <div
+          className="absolute left-0 top-0 h-full rounded-l-sm shadow-inner"
+          style={{
+            width: '14px',
+            background: 'linear-gradient(to right, #1a0a05, #3d1a0a)',
+            transform: 'translateX(-14px) rotateY(90deg)',
+            transformOrigin: 'right center',
+          }}
+        />
+
+        {/* Pages edge */}
+        <div
+          className="absolute right-0 top-1 bottom-1"
+          style={{
+            width: '6px',
+            background:
+              'repeating-linear-gradient(to bottom, #FDF6EC 0px, #e8ddd0 1px, #FDF6EC 2px)',
+            borderRadius: '0 2px 2px 0',
+            transform: 'translateX(6px)',
+          }}
+        />
+      </motion.div>
+    </motion.div>
   );
 }
 
-function Scene() {
-  const books = [
-    { position: [-3.5, 0.5, -1], color: '#8B4513', rotation: 0, scale: 1 },
-    { position: [-1.8, -0.6, -2], color: '#D2691E', rotation: 1.2, scale: 0.9 },
-    { position: [0.3, 1.1, -3], color: '#F4A460', rotation: 2.1, scale: 1.1 },
-    {
-      position: [2.2, -0.2, -1.5],
-      color: '#2C1810',
-      rotation: 0.5,
-      scale: 0.95,
-    },
-    { position: [3.8, 0.9, -2.5], color: '#8B4513', rotation: 1.7, scale: 1 },
-    {
-      position: [-2.8, -1.1, -3.5],
-      color: '#D2691E',
-      rotation: 0.9,
-      scale: 0.85,
-    },
-    { position: [1.0, 1.5, -4], color: '#F4A460', rotation: 3.0, scale: 0.8 },
-    {
-      position: [-0.5, -1.3, -2.5],
-      color: '#2C1810',
-      rotation: 1.5,
-      scale: 1.05,
-    },
-  ];
+/* ─────────────────── FLOATING MINI BOOKS ─────────────────── */
+
+function FloatingMiniBook({ color, delay, x, y, rotate }) {
   return (
-    <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 8, 5]} intensity={1.4} castShadow />
-      <pointLight position={[-4, 3, 2]} intensity={1} color="#F4A460" />
-      <pointLight position={[4, -2, 3]} intensity={0.6} color="#D2691E" />
-      <Stars radius={90} depth={60} count={4000} factor={4} fade speed={0.8} />
-      {books.map((b, i) => (
-        <Book3D key={i} {...b} />
-      ))}
-      <OrbitControls
-        enableZoom={false}
-        enablePan={false}
-        autoRotate
-        autoRotateSpeed={0.5}
+    <motion.div
+      animate={{ y: [y, y - 18, y], rotate: [rotate, rotate + 6, rotate] }}
+      transition={{
+        repeat: Infinity,
+        duration: 3.5 + delay,
+        delay,
+        ease: 'easeInOut',
+      }}
+      className="absolute opacity-30"
+      style={{ left: x, top: y }}
+    >
+      <div
+        className="w-8 h-11 rounded-sm shadow-md"
+        style={{ background: color }}
       />
-    </>
+    </motion.div>
   );
 }
 
@@ -190,48 +241,78 @@ const testimonials = [
 const HOme = () => {
   const [email, setEmail] = useState('');
   const heroRef = useRef(null);
+  const containerRef = useRef(null);
+
+  const { scrollY } = useScroll();
+
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
-  const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const heroBgY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 36 },
     show: (i = 0) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: i * 0.1, duration: 0.6 },
+      transition: { delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] },
     }),
   };
 
+  const miniBooks = [
+    { color: '#D2691E', delay: 0, x: '8%', y: 120, rotate: -12 },
+    { color: '#8B4513', delay: 0.4, x: '78%', y: 80, rotate: 8 },
+    { color: '#F4A460', delay: 0.8, x: '88%', y: 260, rotate: -5 },
+    { color: '#2C1810', delay: 0.2, x: '5%', y: 320, rotate: 15 },
+    { color: '#D4AF37', delay: 1.1, x: '72%', y: 380, rotate: -18 },
+  ];
+
   return (
-    <div className="min-h-screen bg-[#FDF6EC] text-neutral overflow-x-hidden">
+    <div
+      ref={containerRef}
+      className="min-h-screen bg-[#FDF6EC] text-neutral overflow-x-hidden"
+    >
       {/* ══════════ HERO ══════════ */}
       <section
         ref={heroRef}
         className="relative h-screen flex items-center overflow-hidden"
       >
-        <motion.div style={{ y: heroY }} className="absolute inset-0 z-0">
-          <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
-            <Suspense fallback={null}>
-              <Scene />
-            </Suspense>
-          </Canvas>
+        {/* Warm parchment bg with subtle texture pattern */}
+        <motion.div style={{ y: heroBgY }} className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[#FDF6EC]" />
+          {/* Radial warm glow */}
+          <div className="absolute top-1/4 right-1/3 w-[600px] h-[600px] rounded-full bg-primary/8 blur-[100px]" />
+          <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-secondary/10 blur-[80px]" />
+          {/* Dot grid pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle, #2C1810 1px, transparent 1px)',
+              backgroundSize: '32px 32px',
+            }}
+          />
         </motion.div>
 
-        <div className="absolute inset-0 z-10 bg-linear-to-r from-[#FDF6EC]/97 via-[#FDF6EC]/75 to-[#FDF6EC]/10" />
+        {/* Floating mini books decoration */}
+        {miniBooks.map((b, i) => (
+          <FloatingMiniBook key={i} {...b} />
+        ))}
 
+        {/* Text content */}
         <motion.div
           style={{ opacity: heroOpacity }}
-          className="relative z-20 max-w-7xl mx-auto px-6 w-full pt-16"
+          className="relative z-20 max-w-7xl mx-auto px-6 w-full pt-16 flex items-center justify-between"
         >
+          {/* Left: text */}
           <motion.div
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            className="max-w-2xl"
+            className="max-w-xl"
           >
             <motion.span
               variants={fadeUp}
@@ -280,7 +361,6 @@ const HOme = () => {
               </Link>
             </motion.div>
 
-            {/* Trust badges */}
             <motion.div
               variants={fadeUp}
               custom={4}
@@ -294,6 +374,64 @@ const HOme = () => {
                   <FaCheckCircle className="text-secondary" size={13} /> {t}
                 </span>
               ))}
+            </motion.div>
+          </motion.div>
+
+          {/* Right: animated book */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6, x: 60 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden md:flex flex-col items-center gap-8 relative"
+          >
+            <AnimatedBook scrollY={scrollY} />
+
+            {/* Orbiting particles */}
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                animate={{ rotate: 360 }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 8 + i * 2,
+                  ease: 'linear',
+                }}
+                className="absolute"
+                style={{
+                  width: `${200 + i * 60}px`,
+                  height: `${200 + i * 60}px`,
+                  border: '1px dashed rgba(139,69,19,0.12)',
+                  borderRadius: '50%',
+                }}
+              >
+                <motion.div
+                  className="absolute w-2 h-2 rounded-full bg-primary/40"
+                  style={{ top: '-4px', left: '50%', translateX: '-50%' }}
+                />
+              </motion.div>
+            ))}
+
+            {/* Stats pills floating around */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ repeat: Infinity, duration: 2.8, delay: 0.5 }}
+              className="absolute -left-24 top-4 bg-white rounded-xl shadow-lg px-4 py-2.5 flex items-center gap-2 border border-accent/20"
+            >
+              <FaStar className="text-secondary" size={14} />
+              <span className="font-body text-sm font-semibold text-neutral">
+                50k+ Reviews
+              </span>
+            </motion.div>
+
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ repeat: Infinity, duration: 3.2, delay: 1 }}
+              className="absolute -right-20 bottom-8 bg-white rounded-xl shadow-lg px-4 py-2.5 flex items-center gap-2 border border-accent/20"
+            >
+              <FaUsers className="text-primary" size={14} />
+              <span className="font-body text-sm font-semibold text-neutral">
+                5k+ Readers
+              </span>
             </motion.div>
           </motion.div>
         </motion.div>
@@ -311,31 +449,67 @@ const HOme = () => {
         </motion.div>
       </section>
 
-      {/* ══════════ STATS BAR ══════════ */}
-      <section className="py-14 bg-neutral">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className="text-center group"
-            >
-              <div className="text-accent text-3xl flex justify-center mb-3 group-hover:scale-110 transition-transform">
-                {s.icon}
-              </div>
-              <p className="font-heading text-4xl font-black text-[#FDF6EC]">
-                {s.value}
-              </p>
-              <p className="font-body text-accent/70 text-sm mt-1 tracking-wide uppercase">
-                {s.label}
-              </p>
-            </motion.div>
-          ))}
+      {/* ══════════ SCROLL TRANSITION — book lands here ══════════ */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, amount: 0.3 }}
+        className="relative overflow-hidden"
+      >
+        {/* Morphing wave divider */}
+        <div className="relative h-24 bg-[#FDF6EC] -mb-1">
+          <svg
+            viewBox="0 0 1440 96"
+            className="absolute bottom-0 w-full"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,64 C360,96 1080,0 1440,64 L1440,96 L0,96 Z"
+              fill="#2C1810"
+            />
+          </svg>
         </div>
-      </section>
+
+        {/* ══════════ STATS BAR ══════════ */}
+        <section className="py-14 bg-neutral">
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center group"
+              >
+                <div className="text-accent text-3xl flex justify-center mb-3 group-hover:scale-110 transition-transform">
+                  {s.icon}
+                </div>
+                <p className="font-heading text-4xl font-black text-[#FDF6EC]">
+                  {s.value}
+                </p>
+                <p className="font-body text-accent/70 text-sm mt-1 tracking-wide uppercase">
+                  {s.label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Wave bottom */}
+        <div className="relative h-16 bg-neutral -mt-1">
+          <svg
+            viewBox="0 0 1440 64"
+            className="absolute bottom-0 w-full"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,32 C480,64 960,0 1440,32 L1440,64 L0,64 Z"
+              fill="#FDF6EC"
+            />
+          </svg>
+        </div>
+      </motion.div>
 
       {/* ══════════ FEATURED BOOKS ══════════ */}
       <section className="py-24 max-w-7xl mx-auto px-6">
@@ -367,18 +541,43 @@ const HOme = () => {
               whileHover={{ y: -8, transition: { duration: 0.25 } }}
               className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-accent/20 cursor-pointer"
             >
-              {/* Book cover placeholder */}
               <div
                 className="h-52 flex items-center justify-center relative overflow-hidden"
                 style={{
                   background: `linear-gradient(135deg, ${book.color}22, ${book.color}55)`,
                 }}
               >
+                {/* Mini CSS book in card */}
                 <div
-                  className="w-24 h-36 rounded shadow-2xl flex items-center justify-center"
-                  style={{ background: book.color }}
+                  className="relative w-16 h-24"
+                  style={{ perspective: '400px' }}
                 >
-                  <FaBookOpen className="text-[#FDF6EC]/80" size={32} />
+                  <motion.div
+                    animate={{ rotateY: [-5, 5, -5] }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 3,
+                      delay: i * 0.3,
+                    }}
+                    style={{ transformStyle: 'preserve-3d' }}
+                    className="w-full h-full"
+                  >
+                    <div
+                      className="absolute inset-0 rounded-r-md flex items-center justify-center shadow-xl"
+                      style={{ background: book.color }}
+                    >
+                      <FaBookOpen className="text-[#FDF6EC]/80" size={20} />
+                    </div>
+                    <div
+                      className="absolute left-0 top-0 h-full"
+                      style={{
+                        width: '8px',
+                        background: 'rgba(0,0,0,0.4)',
+                        transform: 'translateX(-8px) rotateY(90deg)',
+                        transformOrigin: 'right center',
+                      }}
+                    />
+                  </motion.div>
                 </div>
                 <span className="absolute top-3 right-3 font-body text-xs font-semibold px-2.5 py-1 rounded-full bg-[#FDF6EC]/90 text-neutral">
                   {book.genre}
@@ -442,7 +641,6 @@ const HOme = () => {
                 viewport={{ once: true }}
                 className="relative flex flex-col items-center text-center"
               >
-                {/* Connector line */}
                 {i < steps.length - 1 && (
                   <div className="hidden lg:block absolute top-10 left-[60%] w-full h-px border-t-2 border-dashed border-accent/40 z-0" />
                 )}
@@ -560,7 +758,6 @@ const HOme = () => {
 
       {/* ══════════ NEWSLETTER ══════════ */}
       <section className="py-24 bg-primary relative overflow-hidden">
-        {/* bg decoration */}
         <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-secondary/20 blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
 
@@ -620,14 +817,12 @@ const HOme = () => {
             Join over 5,000 readers already building their dream library on
             BookWorm.
           </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Link
-              to="/browsebookspage"
-              className="font-body font-semibold px-10 py-4 bg-primary text-[#FDF6EC] rounded-xl hover:bg-neutral transition-all shadow-xl shadow-primary/25 flex items-center gap-2 text-lg"
-            >
-              Get Started Free <FaArrowRight />
-            </Link>
-          </div>
+          <Link
+            to="/browsebookspage"
+            className="font-body font-semibold inline-flex items-center gap-2 px-10 py-4 bg-primary text-[#FDF6EC] rounded-xl hover:bg-neutral transition-all shadow-xl shadow-primary/25 text-lg"
+          >
+            Get Started Free <FaArrowRight />
+          </Link>
         </motion.div>
       </section>
     </div>
