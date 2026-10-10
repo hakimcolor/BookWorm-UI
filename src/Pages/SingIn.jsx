@@ -28,12 +28,12 @@
 //     try {
 //       setLoading(true);
 //       toast.loading('Signing in...');
-      
+
 //       await signinUser(email, password);
-      
+
 //       toast.dismiss();
 //       toast.success('Login successful!');
-      
+
 //       setTimeout(() => {
 //         navigate('/');
 //       }, 1000);
@@ -77,12 +77,12 @@
 //     try {
 //       setLoading(true);
 //       toast.loading('Signing in with Google...');
-      
+
 //       await signInWithGoogle();
-      
+
 //       toast.dismiss();
 //       toast.success('Google login successful!');
-      
+
 //       setTimeout(() => {
 //         navigate('/');
 //       }, 1000);
@@ -260,7 +260,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet';
 import { AuthContext } from '../Context/AuthContext';
 import { auth } from '../Firebase/Firebase.confige';
-import BookImage from '../assets/book-image.png'; // Add your book-related image here
+import BookScene from '../Componentes/BookScene';
 
 const SignIn = () => {
   const { signinUser, signInWithGoogle } = useContext(AuthContext);
@@ -395,13 +395,19 @@ const SignIn = () => {
       <Toaster position="top-right" />
 
       <div className="w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
-        {/* Left Side - Image */}
-        <div className="lg:w-1/2 hidden lg:block">
-          <img
-            src={BookImage}
-            alt="Books"
-            className="w-full h-full object-cover"
-          />
+        {/* Left Side - Three.js Book Animation */}
+        <div className="lg:w-1/2 hidden lg:flex flex-col items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-900 to-amber-900 relative overflow-hidden">
+          <div className="absolute inset-0">
+            <BookScene />
+          </div>
+          <div className="relative z-10 text-center px-8 pointer-events-none">
+            <h1 className="text-4xl font-extrabold text-white mb-3 drop-shadow-lg">
+              📚 BookHub
+            </h1>
+            <p className="text-amber-200 text-lg font-medium drop-shadow">
+              Your world of knowledge awaits
+            </p>
+          </div>
         </div>
 
         {/* Right Side - Form */}
