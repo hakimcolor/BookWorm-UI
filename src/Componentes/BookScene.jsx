@@ -107,6 +107,40 @@ function Pencil({ position, speed = 1.2 }) {
   );
 }
 
+// Floating diploma / scroll
+function Scroll({ position, speed = 0.9 }) {
+  const ref = useRef();
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime() * speed;
+    ref.current.rotation.y = t * 0.3;
+    ref.current.position.y = position[1] + Math.sin(t * 0.55) * 0.3;
+  });
+  return (
+    <group ref={ref} position={position} scale={0.65}>
+      {/* Scroll body */}
+      <mesh>
+        <cylinderGeometry args={[0.55, 0.55, 1.2, 24]} />
+        <meshStandardMaterial color="#fef3c7" roughness={0.8} />
+      </mesh>
+      {/* Top roll */}
+      <mesh position={[0, 0.65, 0]}>
+        <cylinderGeometry args={[0.62, 0.62, 0.15, 24]} />
+        <meshStandardMaterial color="#d97706" />
+      </mesh>
+      {/* Bottom roll */}
+      <mesh position={[0, -0.65, 0]}>
+        <cylinderGeometry args={[0.62, 0.62, 0.15, 24]} />
+        <meshStandardMaterial color="#d97706" />
+      </mesh>
+      {/* Ribbon */}
+      <mesh position={[0, 0, 0.56]}>
+        <boxGeometry args={[0.12, 1.2, 0.02]} />
+        <meshStandardMaterial color="#dc2626" />
+      </mesh>
+    </group>
+  );
+}
+
 // Particle trail following a curved path (reading light beam)
 function LightBeam() {
   const ref = useRef();
@@ -398,6 +432,9 @@ export default function BookScene() {
 
       {/* Magnifying glass */}
       <MagnifyingGlass position={[3, 0.5, 0.5]} speed={0.9} />
+
+      {/* Diploma scroll */}
+      <Scroll position={[-1, -2.5, 1]} speed={0.75} />
 
       {/* Pencils */}
       <Pencil position={[-1.5, 0.8, 1.5]} speed={1.1} />
