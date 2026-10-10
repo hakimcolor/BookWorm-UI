@@ -253,7 +253,7 @@
 // export default SignIn;
 import { useContext, useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { FcGoogle } from 'react-icons/fc';
+import { FaGoogle } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import toast, { Toaster } from 'react-hot-toast';
@@ -422,7 +422,7 @@ const SignIn = () => {
             disabled={loading}
             className="w-full py-3 px-4 bg-white/90 border border-white/30 rounded-xl flex items-center justify-center gap-3 hover:bg-white transition-all duration-300 font-semibold text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed shadow cursor-pointer"
           >
-            <FcGoogle size={24} />
+            <FaGoogle size={20} className="text-red-500" />
             <span>Continue with Google</span>
           </button>
 

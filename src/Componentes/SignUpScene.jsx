@@ -1,8 +1,25 @@
-import { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { useRef, useMemo, useEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
-// Single aurora ribbon line
+// Shared mouse position (normalised -1 to 1)
+const mouse = { x: 0, y: 0 };
+
+// Camera follows mouse with smooth lerp
+function MouseCamera() {
+  const { camera } = useThree();
+  const target = useRef({ x: 0, y: 0 });
+  useFrame(() => {
+    target.current.x += (mouse.x * 1.8 - target.current.x) * 0.05;
+    target.current.y += (mouse.y * 1.2 - target.current.y) * 0.05;
+    camera.position.x = target.current.x;
+    camera.position.y = 0.5 + target.current.y;
+    camera.lookAt(0, 0, 0);
+  });
+  return null;
+}
+
+// Single aurora ribbon
 function AuroraRibbon({ yOffset, color1, color2, speed, zPos }) {
   const ref = useRef();
   const count = 80;
@@ -33,12 +50,14 @@ function AuroraRibbon({ yOffset, color1, color2, speed, zPos }) {
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime() * speed;
+    // extra mouse-driven wave distortion
+    const mx = mouse.x * 0.6;
     for (let i = 0; i < count; i++) {
       const x = (i / (count - 1)) * 20 - 10;
       workArr.current[i * 3 + 1] =
         yOffset +
-        Math.sin(x * 0.4 + t) * 0.8 +
-        Math.sin(x * 0.2 - t * 0.7) * 0.5;
+        Math.sin(x * 0.4 + t + mx) * 0.9 +
+        Math.sin(x * 0.22 - t * 0.7 - mx * 0.5) * 0.55;
     }
     ref.current.geometry.attributes.position.array.set(workArr.current);
     ref.current.geometry.attributes.position.needsUpdate = true;
@@ -53,26 +72,26 @@ function AuroraRibbon({ yOffset, color1, color2, speed, zPos }) {
         />
         <bufferAttribute attach="attributes-color" args={[col, 3]} />
       </bufferGeometry>
-      <lineBasicMaterial vertexColors transparent opacity={0.55} />
+      <lineBasicMaterial vertexColors transparent opacity={0.6} />
     </line>
   );
 }
 
-// Many ribbons stacked = aurora curtain
+// Stacked aurora ribbons
 function AuroraCurtain() {
   const ribbons = [
-    { y: 2.5, c1: '#00ff87', c2: '#60efff', spd: 0.28, z: -4.0 },
-    { y: 2.0, c1: '#7c3aed', c2: '#00ff87', spd: 0.22, z: -3.8 },
-    { y: 1.5, c1: '#60efff', c2: '#a855f7', spd: 0.35, z: -3.5 },
-    { y: 1.0, c1: '#00ff87', c2: '#3b82f6', spd: 0.18, z: -3.2 },
-    { y: 0.5, c1: '#f472b6', c2: '#60efff', spd: 0.3, z: -3.0 },
-    { y: 0.0, c1: '#a855f7', c2: '#00ff87', spd: 0.25, z: -2.8 },
-    { y: -0.5, c1: '#3b82f6', c2: '#f472b6', spd: 0.32, z: -2.5 },
-    { y: -1.0, c1: '#00ff87', c2: '#7c3aed', spd: 0.2, z: -2.2 },
-    { y: -1.5, c1: '#60efff', c2: '#f59e0b', spd: 0.27, z: -2.0 },
-    { y: -2.0, c1: '#a855f7', c2: '#3b82f6', spd: 0.33, z: -1.8 },
-    { y: -2.5, c1: '#f472b6', c2: '#00ff87', spd: 0.23, z: -1.5 },
-    { y: -3.0, c1: '#60efff', c2: '#a855f7', spd: 0.38, z: -1.2 },
+    { y: 3.0, c1: '#00ff87', c2: '#60efff', spd: 0.28, z: -4.5 },
+    { y: 2.4, c1: '#7c3aed', c2: '#00ff87', spd: 0.22, z: -4.2 },
+    { y: 1.8, c1: '#60efff', c2: '#a855f7', spd: 0.35, z: -3.9 },
+    { y: 1.2, c1: '#00ff87', c2: '#3b82f6', spd: 0.18, z: -3.6 },
+    { y: 0.6, c1: '#f472b6', c2: '#60efff', spd: 0.3, z: -3.3 },
+    { y: 0.0, c1: '#a855f7', c2: '#00ff87', spd: 0.25, z: -3.0 },
+    { y: -0.6, c1: '#3b82f6', c2: '#f472b6', spd: 0.32, z: -2.7 },
+    { y: -1.2, c1: '#00ff87', c2: '#7c3aed', spd: 0.2, z: -2.4 },
+    { y: -1.8, c1: '#60efff', c2: '#f59e0b', spd: 0.27, z: -2.1 },
+    { y: -2.4, c1: '#a855f7', c2: '#3b82f6', spd: 0.33, z: -1.8 },
+    { y: -3.0, c1: '#f472b6', c2: '#00ff87', spd: 0.23, z: -1.5 },
+    { y: -3.6, c1: '#60efff', c2: '#a855f7', spd: 0.38, z: -1.2 },
   ];
   return (
     <>
@@ -90,25 +109,26 @@ function AuroraCurtain() {
   );
 }
 
-// Constellation star dots + lines
-function Constellation({ points, color }) {
+// Constellation dots + lines — parallax layer
+function Constellation({ points, color, depthFactor = 0.3 }) {
   const groupRef = useRef();
-  useFrame((state) => {
-    groupRef.current.rotation.y =
-      Math.sin(state.clock.getElapsedTime() * 0.08) * 0.15;
+  useFrame(() => {
+    groupRef.current.position.x +=
+      (mouse.x * depthFactor - groupRef.current.position.x) * 0.04;
+    groupRef.current.position.y +=
+      (-mouse.y * depthFactor * 0.6 - groupRef.current.position.y) * 0.04;
   });
   const linePos = useMemo(() => {
     const arr = [];
-    for (let i = 0; i < points.length - 1; i++) {
+    for (let i = 0; i < points.length - 1; i++)
       arr.push(...points[i], ...points[i + 1]);
-    }
     return new Float32Array(arr);
   }, [points]);
   return (
     <group ref={groupRef}>
       {points.map((p, i) => (
         <mesh key={i} position={p}>
-          <sphereGeometry args={[0.045, 6, 6]} />
+          <sphereGeometry args={[0.05, 6, 6]} />
           <meshBasicMaterial color={color} />
         </mesh>
       ))}
@@ -116,21 +136,27 @@ function Constellation({ points, color }) {
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[linePos, 3]} />
         </bufferGeometry>
-        <lineBasicMaterial color={color} transparent opacity={0.28} />
+        <lineBasicMaterial color={color} transparent opacity={0.3} />
       </lineSegments>
     </group>
   );
 }
 
-// Glowing floating book
-function MagicBook({ position, color, speed, scale }) {
+// Glowing floating book — parallax drifts with mouse
+function MagicBook({ position, color, speed, scale, parallax = 0.5 }) {
   const ref = useRef();
   const matRef = useRef();
+  const baseX = position[0];
+  const baseY = position[1];
   useFrame((state) => {
     const t = state.clock.getElapsedTime() * speed;
+    // mouse parallax on x/y
+    const tx = baseX + mouse.x * parallax;
+    const ty = baseY + Math.sin(t * 0.6) * 0.35 - mouse.y * parallax * 0.5;
+    ref.current.position.x += (tx - ref.current.position.x) * 0.04;
+    ref.current.position.y += (ty - ref.current.position.y) * 0.04;
     ref.current.rotation.y = Math.sin(t * 0.45) * 0.55;
     ref.current.rotation.x = Math.cos(t * 0.3) * 0.1;
-    ref.current.position.y = position[1] + Math.sin(t * 0.6) * 0.35;
     matRef.current.emissiveIntensity = 0.5 + Math.sin(t * 1.2) * 0.3;
   });
   return (
@@ -164,10 +190,10 @@ function MagicBook({ position, color, speed, scale }) {
   );
 }
 
-// Colourful magic dust particles
+// Coloured magic dust — shifts with mouse
 function MagicDust() {
   const ref = useRef();
-  const count = 1800;
+  const count = 2000;
   const { pos, col } = useMemo(() => {
     const p = new Float32Array(count * 3);
     const c = new Float32Array(count * 3);
@@ -191,7 +217,9 @@ function MagicDust() {
   }, []);
 
   useFrame((state) => {
-    ref.current.rotation.y = state.clock.getElapsedTime() * 0.018;
+    ref.current.rotation.y =
+      state.clock.getElapsedTime() * 0.018 + mouse.x * 0.15;
+    ref.current.rotation.x = mouse.y * 0.08;
   });
 
   return (
@@ -211,22 +239,24 @@ function MagicDust() {
   );
 }
 
-// Soft glowing core orb
+// Soft pulsing core orb
 function CoreOrb() {
   const ref = useRef();
   useFrame((state) => {
     const s = 1 + Math.sin(state.clock.getElapsedTime() * 0.4) * 0.08;
     ref.current.scale.set(s, s, s);
+    ref.current.position.x += (mouse.x * 0.8 - ref.current.position.x) * 0.02;
+    ref.current.position.y += (-mouse.y * 0.5 - ref.current.position.y) * 0.02;
   });
   return (
     <group ref={ref} position={[0, 0, -5]}>
       <mesh>
         <sphereGeometry args={[2.5, 32, 32]} />
-        <meshBasicMaterial color="#00ff87" transparent opacity={0.04} />
+        <meshBasicMaterial color="#00ff87" transparent opacity={0.05} />
       </mesh>
       <mesh>
         <sphereGeometry args={[1.8, 32, 32]} />
-        <meshBasicMaterial color="#60efff" transparent opacity={0.05} />
+        <meshBasicMaterial color="#60efff" transparent opacity={0.06} />
       </mesh>
       <mesh>
         <sphereGeometry args={[1.0, 32, 32]} />
@@ -236,27 +266,98 @@ function CoreOrb() {
   );
 }
 
+// Wrapper that listens to DOM mouse events
+function SceneContent() {
+  return (
+    <>
+      <MouseCamera />
+      <color attach="background" args={['#020817']} />
+      <ambientLight intensity={0.25} />
+      <pointLight position={[0, 3, 3]} intensity={1.5} color="#00ff87" />
+      <pointLight position={[-4, 0, 2]} intensity={1.0} color="#7c3aed" />
+      <pointLight position={[4, -2, 2]} intensity={0.9} color="#60efff" />
+      <pointLight position={[0, -3, 2]} intensity={0.6} color="#f472b6" />
+      <CoreOrb />
+      <AuroraCurtain />
+      <Constellation
+        points={[
+          [-6, 3, -1],
+          [-5, 1.5, -1],
+          [-4, 2.5, -1],
+          [-3, 1, -1],
+          [-4.5, 0, -1],
+        ]}
+        color="#60efff"
+        depthFactor={0.4}
+      />
+      <Constellation
+        points={[
+          [5, 2, -1],
+          [6, 0.5, -1],
+          [4.5, -0.5, -1],
+          [6, -1.5, -1],
+          [5, -2.5, -1],
+        ]}
+        color="#a855f7"
+        depthFactor={0.5}
+      />
+      <MagicDust />
+      <MagicBook
+        position={[-4, 1.8, 0.5]}
+        color="#00ff87"
+        speed={0.55}
+        scale={0.8}
+        parallax={0.55}
+      />
+      <MagicBook
+        position={[4, -1.2, 0]}
+        color="#60efff"
+        speed={0.65}
+        scale={0.75}
+        parallax={0.4}
+      />
+      <MagicBook
+        position={[-2, -2.5, 0.8]}
+        color="#a855f7"
+        speed={0.7}
+        scale={0.65}
+        parallax={0.65}
+      />
+      <MagicBook
+        position={[2.5, 2.5, -0.5]}
+        color="#f472b6"
+        speed={0.5}
+        scale={0.7}
+        parallax={0.45}
+      />
+      <MagicBook
+        position={[0, -3.5, 1.2]}
+        color="#f59e0b"
+        speed={0.8}
+        scale={0.6}
+        parallax={0.5}
+      />
+      <MagicBook
+        position={[-3.5, -0.5, 1]}
+        color="#3b82f6"
+        speed={0.6}
+        scale={0.7}
+        parallax={0.6}
+      />
+    </>
+  );
+}
+
 export default function SignUpScene() {
-  const c1pts = useMemo(
-    () => [
-      [-6, 3, -1],
-      [-5, 1.5, -1],
-      [-4, 2.5, -1],
-      [-3, 1, -1],
-      [-4.5, 0, -1],
-    ],
-    []
-  );
-  const c2pts = useMemo(
-    () => [
-      [5, 2, -1],
-      [6, 0.5, -1],
-      [4.5, -0.5, -1],
-      [6, -1.5, -1],
-      [5, -2.5, -1],
-    ],
-    []
-  );
+  // Track mouse on the window
+  useEffect(() => {
+    const handleMove = (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = (e.clientY / window.innerHeight) * 2 - 1;
+    };
+    window.addEventListener('mousemove', handleMove);
+    return () => window.removeEventListener('mousemove', handleMove);
+  }, []);
 
   return (
     <Canvas
@@ -264,56 +365,7 @@ export default function SignUpScene() {
       style={{ background: 'transparent' }}
       gl={{ antialias: true }}
     >
-      <color attach="background" args={['#020817']} />
-
-      <ambientLight intensity={0.25} />
-      <pointLight position={[0, 3, 3]} intensity={1.5} color="#00ff87" />
-      <pointLight position={[-4, 0, 2]} intensity={1.0} color="#7c3aed" />
-      <pointLight position={[4, -2, 2]} intensity={0.9} color="#60efff" />
-      <pointLight position={[0, -3, 2]} intensity={0.6} color="#f472b6" />
-
-      <CoreOrb />
-      <AuroraCurtain />
-      <Constellation points={c1pts} color="#60efff" />
-      <Constellation points={c2pts} color="#a855f7" />
-      <MagicDust />
-
-      <MagicBook
-        position={[-4, 1.8, 0.5]}
-        color="#00ff87"
-        speed={0.55}
-        scale={0.8}
-      />
-      <MagicBook
-        position={[4, -1.2, 0]}
-        color="#60efff"
-        speed={0.65}
-        scale={0.75}
-      />
-      <MagicBook
-        position={[-2, -2.5, 0.8]}
-        color="#a855f7"
-        speed={0.7}
-        scale={0.65}
-      />
-      <MagicBook
-        position={[2.5, 2.5, -0.5]}
-        color="#f472b6"
-        speed={0.5}
-        scale={0.7}
-      />
-      <MagicBook
-        position={[0, -3.5, 1.2]}
-        color="#f59e0b"
-        speed={0.8}
-        scale={0.6}
-      />
-      <MagicBook
-        position={[-3.5, -0.5, 1]}
-        color="#3b82f6"
-        speed={0.6}
-        scale={0.7}
-      />
+      <SceneContent />
     </Canvas>
   );
 }
