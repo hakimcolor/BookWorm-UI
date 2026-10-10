@@ -107,6 +107,43 @@ function Pencil({ position, speed = 1.2 }) {
   );
 }
 
+// Particle trail following a curved path (reading light beam)
+function LightBeam() {
+  const ref = useRef();
+  const count = 80;
+  const positions = useMemo(() => {
+    const arr = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      const t = (i / count) * Math.PI * 2;
+      arr[i * 3] = Math.cos(t) * 5;
+      arr[i * 3 + 1] = Math.sin(t * 2) * 2.5;
+      arr[i * 3 + 2] = Math.sin(t) * 2;
+    }
+    return arr;
+  }, []);
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime() * 0.4;
+    ref.current.rotation.y = t * 0.2;
+    ref.current.rotation.x = Math.sin(t * 0.3) * 0.1;
+  });
+
+  return (
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.08}
+        color="#fbbf24"
+        transparent
+        opacity={0.6}
+        sizeAttenuation
+      />
+    </points>
+  );
+}
+
 // Floating magnifying glass (research/study symbol)
 function MagnifyingGlass({ position, speed = 0.75 }) {
   const ref = useRef();
@@ -288,6 +325,7 @@ export default function BookScene() {
 
       <Stars radius={60} depth={30} count={400} factor={3} fade speed={0.5} />
       <Sparkles />
+      <LightBeam />
 
       {/* Books scattered around */}
       <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.5}>
