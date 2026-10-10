@@ -107,6 +107,42 @@ function Pencil({ position, speed = 1.2 }) {
   );
 }
 
+// Floating open book (reading animation)
+function OpenBook({ position, speed = 0.8 }) {
+  const ref = useRef();
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime() * speed;
+    ref.current.rotation.y = Math.sin(t * 0.4) * 0.5;
+    ref.current.position.y = position[1] + Math.sin(t * 0.5) * 0.35;
+  });
+  return (
+    <group ref={ref} position={position}>
+      {/* Left page */}
+      <mesh position={[-0.55, 0, 0]} rotation={[0, 0.15, 0]}>
+        <boxGeometry args={[1.0, 1.4, 0.04]} />
+        <meshStandardMaterial color="#fffdf5" roughness={0.9} />
+      </mesh>
+      {/* Right page */}
+      <mesh position={[0.55, 0, 0]} rotation={[0, -0.15, 0]}>
+        <boxGeometry args={[1.0, 1.4, 0.04]} />
+        <meshStandardMaterial color="#fffdf5" roughness={0.9} />
+      </mesh>
+      {/* Spine crease */}
+      <mesh position={[0, 0, 0.02]}>
+        <boxGeometry args={[0.06, 1.4, 0.06]} />
+        <meshStandardMaterial color="#c8b89a" />
+      </mesh>
+      {/* Text lines on pages */}
+      {[-0.4, -0.2, 0, 0.2, 0.4].map((y, i) => (
+        <mesh key={i} position={[-0.55, y, 0.022]} rotation={[0, 0.15, 0]}>
+          <boxGeometry args={[0.7, 0.025, 0.001]} />
+          <meshStandardMaterial color="#aaa9a0" />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
 // Floating star/sparkle for magical effect
 function Sparkles() {
   const points = useMemo(() => {
@@ -215,6 +251,9 @@ export default function BookScene() {
 
       {/* Graduation cap */}
       <GraduationCap position={[1.5, 0.5, 1]} speed={0.6} />
+
+      {/* Open book center */}
+      <OpenBook position={[0, 0, 1.5]} speed={0.7} />
 
       {/* Pencils */}
       <Pencil position={[-1.5, 0.8, 1.5]} speed={1.1} />
