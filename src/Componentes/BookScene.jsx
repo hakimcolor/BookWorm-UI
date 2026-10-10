@@ -107,6 +107,35 @@ function Pencil({ position, speed = 1.2 }) {
   );
 }
 
+// Floating magnifying glass (research/study symbol)
+function MagnifyingGlass({ position, speed = 0.75 }) {
+  const ref = useRef();
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime() * speed;
+    ref.current.rotation.z = Math.sin(t * 0.4) * 0.3;
+    ref.current.position.y = position[1] + Math.sin(t * 0.6) * 0.25;
+  });
+  return (
+    <group ref={ref} position={position} scale={0.7}>
+      {/* Glass ring */}
+      <mesh>
+        <torusGeometry args={[0.4, 0.07, 12, 48]} />
+        <meshStandardMaterial color="#60a5fa" metalness={0.6} roughness={0.2} />
+      </mesh>
+      {/* Lens */}
+      <mesh>
+        <circleGeometry args={[0.38, 32]} />
+        <meshStandardMaterial color="#bfdbfe" transparent opacity={0.35} />
+      </mesh>
+      {/* Handle */}
+      <mesh position={[0.45, -0.45, 0]} rotation={[0, 0, Math.PI / 4]}>
+        <cylinderGeometry args={[0.06, 0.06, 0.7, 8]} />
+        <meshStandardMaterial color="#60a5fa" metalness={0.5} />
+      </mesh>
+    </group>
+  );
+}
+
 // Floating bookmark
 function Bookmark({ position, color = '#ef4444', speed = 1.0 }) {
   const ref = useRef();
@@ -328,6 +357,9 @@ export default function BookScene() {
       {/* Bookmarks */}
       <Bookmark position={[1.5, -3, 0.5]} color="#ef4444" speed={1.1} />
       <Bookmark position={[-1.8, 2.5, -0.5]} color="#d4af37" speed={0.85} />
+
+      {/* Magnifying glass */}
+      <MagnifyingGlass position={[3, 0.5, 0.5]} speed={0.9} />
 
       {/* Pencils */}
       <Pencil position={[-1.5, 0.8, 1.5]} speed={1.1} />
