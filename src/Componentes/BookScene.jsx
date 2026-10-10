@@ -107,6 +107,56 @@ function Pencil({ position, speed = 1.2 }) {
   );
 }
 
+// Floating light bulb (ideas / learning)
+function LightBulb({ position, speed = 0.85 }) {
+  const ref = useRef();
+  const glowRef = useRef();
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime() * speed;
+    ref.current.position.y = position[1] + Math.sin(t * 0.6) * 0.3;
+    ref.current.rotation.y = t * 0.25;
+    // pulse glow
+    const s = 1 + Math.sin(t * 2) * 0.15;
+    glowRef.current.scale.set(s, s, s);
+  });
+  return (
+    <group ref={ref} position={position} scale={0.55}>
+      {/* Bulb glass */}
+      <mesh>
+        <sphereGeometry args={[0.5, 20, 20]} />
+        <meshStandardMaterial
+          color="#fef9c3"
+          transparent
+          opacity={0.75}
+          emissive="#fef08a"
+          emissiveIntensity={0.5}
+        />
+      </mesh>
+      {/* Glow core */}
+      <mesh ref={glowRef}>
+        <sphereGeometry args={[0.28, 12, 12]} />
+        <meshStandardMaterial
+          color="#fbbf24"
+          emissive="#fbbf24"
+          emissiveIntensity={1.5}
+          transparent
+          opacity={0.8}
+        />
+      </mesh>
+      {/* Neck */}
+      <mesh position={[0, -0.6, 0]}>
+        <cylinderGeometry args={[0.22, 0.28, 0.3, 12]} />
+        <meshStandardMaterial color="#d1d5db" metalness={0.4} />
+      </mesh>
+      {/* Base */}
+      <mesh position={[0, -0.78, 0]}>
+        <cylinderGeometry args={[0.2, 0.18, 0.15, 12]} />
+        <meshStandardMaterial color="#9ca3af" metalness={0.5} />
+      </mesh>
+    </group>
+  );
+}
+
 // Floating diploma / scroll
 function Scroll({ position, speed = 0.9 }) {
   const ref = useRef();
@@ -436,6 +486,9 @@ export default function BookScene() {
 
       {/* Diploma scroll */}
       <Scroll position={[-1, -2.5, 1]} speed={0.75} />
+
+      {/* Light bulb */}
+      <LightBulb position={[2.5, 2.8, 0]} speed={0.8} />
 
       {/* Pencils */}
       <Pencil position={[-1.5, 0.8, 1.5]} speed={1.1} />
