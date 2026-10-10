@@ -356,6 +356,7 @@ export default function BookScene() {
       <directionalLight position={[5, 8, 5]} intensity={1.2} castShadow />
       <pointLight position={[-4, 4, 3]} intensity={0.8} color="#f59e0b" />
       <pointLight position={[4, -3, 2]} intensity={0.5} color="#3b82f6" />
+      <pointLight position={[0, 0, 4]} intensity={0.4} color="#a78bfa" />
 
       <Stars radius={60} depth={30} count={400} factor={3} fade speed={0.5} />
       <Sparkles />

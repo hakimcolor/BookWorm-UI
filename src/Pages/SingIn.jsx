@@ -396,7 +396,7 @@ const SignIn = () => {
 
       <div className="w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
         {/* Left Side - Three.js Book Animation */}
-        <div className="lg:w-1/2 hidden lg:flex flex-col items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-900 to-amber-900 relative overflow-hidden">
+        <div className="lg:w-1/2 hidden lg:flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 relative overflow-hidden">
           <div className="absolute inset-0">
             <BookScene />
           </div>
