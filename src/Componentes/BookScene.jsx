@@ -107,6 +107,47 @@ function Pencil({ position, speed = 1.2 }) {
   );
 }
 
+// Floating atom / knowledge symbol
+function KnowledgeAtom({ position, speed = 0.7 }) {
+  const ref = useRef();
+  const ring1 = useRef();
+  const ring2 = useRef();
+  const ring3 = useRef();
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime() * speed;
+    ref.current.position.y = position[1] + Math.sin(t * 0.5) * 0.3;
+    ring1.current.rotation.y = t * 0.8;
+    ring2.current.rotation.x = t * 0.6;
+    ring3.current.rotation.z = t * 0.9;
+  });
+  return (
+    <group ref={ref} position={position} scale={0.6}>
+      {/* Core sphere */}
+      <mesh>
+        <sphereGeometry args={[0.2, 16, 16]} />
+        <meshStandardMaterial
+          color="#f59e0b"
+          emissive="#f59e0b"
+          emissiveIntensity={0.4}
+        />
+      </mesh>
+      {/* Orbit rings */}
+      <mesh ref={ring1}>
+        <torusGeometry args={[0.6, 0.03, 8, 48]} />
+        <meshStandardMaterial color="#60a5fa" />
+      </mesh>
+      <mesh ref={ring2} rotation={[Math.PI / 3, 0, 0]}>
+        <torusGeometry args={[0.6, 0.03, 8, 48]} />
+        <meshStandardMaterial color="#34d399" />
+      </mesh>
+      <mesh ref={ring3} rotation={[Math.PI / 1.5, 0, 0]}>
+        <torusGeometry args={[0.6, 0.03, 8, 48]} />
+        <meshStandardMaterial color="#f472b6" />
+      </mesh>
+    </group>
+  );
+}
+
 // Floating open book (reading animation)
 function OpenBook({ position, speed = 0.8 }) {
   const ref = useRef();
@@ -254,6 +295,9 @@ export default function BookScene() {
 
       {/* Open book center */}
       <OpenBook position={[0, 0, 1.5]} speed={0.7} />
+
+      {/* Knowledge atom */}
+      <KnowledgeAtom position={[-3, 0, 0]} speed={0.8} />
 
       {/* Pencils */}
       <Pencil position={[-1.5, 0.8, 1.5]} speed={1.1} />
