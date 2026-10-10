@@ -408,25 +408,25 @@ const SignIn = () => {
       {/* Card */}
       <div className="relative z-20 w-full max-w-md mx-4 my-10">
         {/* Outer glow ring */}
-        <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-br from-amber-400/40 via-purple-500/30 to-pink-500/30 blur-sm" />
+        <div className="absolute -inset-px rounded-3xl bg-white/10 blur-sm" />
 
         <div className="relative bg-white/8 backdrop-blur-2xl border border-white/15 rounded-3xl shadow-2xl overflow-hidden">
           {/* Top accent bar */}
-          <div className="h-1 w-full bg-gradient-to-r from-amber-400 via-purple-500 to-pink-500" />
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-white/40 to-transparent" />
 
           <div className="p-8 space-y-5">
             {/* Header */}
             <div className="text-center space-y-2">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400/20 to-purple-500/20 border border-white/15 mb-1">
-                <FaBookOpen size={28} className="text-amber-300" />
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/8 border border-white/12 mb-1">
+                <FaBookOpen size={28} className="text-white/80" />
               </div>
               <h2 className="text-3xl font-extrabold text-white tracking-tight">
                 Welcome Back
               </h2>
-              <p className="text-sm text-white/50 flex items-center justify-center gap-1">
-                <HiSparkles className="text-amber-400" size={14} />
+              <p className="text-sm text-white/35 flex items-center justify-center gap-1">
+                <HiSparkles className="text-white/50" size={13} />
                 Sign in to continue your reading journey
-                <HiSparkles className="text-amber-400" size={14} />
+                <HiSparkles className="text-white/50" size={13} />
               </p>
             </div>
 
@@ -434,11 +434,11 @@ const SignIn = () => {
             <button
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full py-3 px-4 bg-white/90 hover:bg-white border border-white/20 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 font-semibold text-gray-800 shadow-lg hover:shadow-white/20 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer group"
+              className="w-full py-3 px-4 bg-white/10 border border-white/20 rounded-2xl flex items-center justify-center gap-3 hover:bg-white/15 transition-all duration-300 font-semibold text-white disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer group"
             >
               <FaGoogle
                 size={18}
-                className="text-red-500 group-hover:scale-110 transition-transform"
+                className="text-white/70 group-hover:text-white transition-colors"
               />
               <span>Continue with Google</span>
             </button>
@@ -456,46 +456,45 @@ const SignIn = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Email */}
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-white/60 uppercase tracking-widest flex items-center gap-1.5">
-                  <MdOutlineEmail size={14} className="text-amber-400" /> Email
+                <label className="text-xs font-semibold text-white/50 uppercase tracking-widest flex items-center gap-1.5">
+                  <MdOutlineEmail size={13} className="text-white/50" /> Email
                 </label>
                 <div className="relative">
                   <MdOutlineEmail
                     size={18}
-                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40"
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30"
                   />
                   <input
                     type="email"
                     placeholder="you@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 bg-white/8 border border-white/15 hover:border-amber-400/50 focus:border-amber-400 text-white placeholder-white/30 rounded-xl outline-none transition-all duration-200 focus:bg-white/12"
+                    className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/15 hover:border-white/35 focus:border-white/60 text-white placeholder-white/25 rounded-xl outline-none transition-all focus:bg-white/8"
                   />
                 </div>
               </div>
 
               {/* Password */}
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-white/60 uppercase tracking-widest flex items-center gap-1.5">
-                  <MdLockOutline size={14} className="text-amber-400" />{' '}
-                  Password
+                <label className="text-xs font-semibold text-white/50 uppercase tracking-widest flex items-center gap-1.5">
+                  <MdLockOutline size={13} className="text-white/50" /> Password
                 </label>
                 <div className="relative">
                   <MdLockOutline
                     size={18}
-                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40"
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30"
                   />
                   <input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-10 pr-12 py-3 bg-white/8 border border-white/15 hover:border-amber-400/50 focus:border-amber-400 text-white placeholder-white/30 rounded-xl outline-none transition-all duration-200 focus:bg-white/12"
+                    className="w-full pl-10 pr-12 py-3 bg-white/5 border border-white/15 hover:border-white/35 focus:border-white/60 text-white placeholder-white/25 rounded-xl outline-none transition-all focus:bg-white/8"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/40 hover:text-amber-300 transition-colors cursor-pointer"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors cursor-pointer"
                   >
                     {showPassword ? (
                       <AiOutlineEyeInvisible size={20} />
@@ -514,8 +513,8 @@ const SignIn = () => {
                   disabled={!email}
                   className={`text-xs font-medium transition-all cursor-pointer ${
                     email
-                      ? 'text-amber-400 hover:text-amber-300 hover:underline'
-                      : 'text-white/25 cursor-not-allowed'
+                      ? 'text-white/60 hover:text-white hover:underline'
+                      : 'text-white/20 cursor-not-allowed'
                   }`}
                 >
                   Forgot password?
@@ -526,7 +525,7 @@ const SignIn = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 px-4 bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-400 hover:via-orange-400 hover:to-pink-400 text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-amber-400/40 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="w-full py-3.5 px-4 bg-white text-black font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-white/90 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-white/10 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 {loading ? (
                   <span className="flex items-center gap-2">
@@ -565,7 +564,7 @@ const SignIn = () => {
               No account?{' '}
               <NavLink
                 to="/signup"
-                className="text-amber-300 font-semibold hover:text-amber-200 transition-colors"
+                className="text-white font-semibold hover:text-white/70 transition-colors"
               >
                 Create one free
               </NavLink>

@@ -172,9 +172,9 @@ const SignUp = () => {
   };
 
   const inputCls =
-    'w-full pl-10 pr-4 py-2.5 bg-white/10 border border-white/25 text-white placeholder-white/40 rounded-lg focus:ring-2 focus:ring-teal-400 focus:border-transparent outline-none transition-all text-sm';
+    'w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/15 hover:border-white/40 focus:border-white/70 text-white placeholder-white/25 rounded-xl outline-none transition-all text-sm focus:bg-white/10';
   const labelCls =
-    'block text-xs font-semibold text-teal-200 mb-1 uppercase tracking-wide';
+    'block text-xs font-semibold text-white/50 mb-1 uppercase tracking-widest';
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -183,217 +183,240 @@ const SignUp = () => {
       </Helmet>
       <Toaster position="top-right" />
 
-      {/* Three.js full-page bg */}
       <div className="fixed inset-0 z-0">
         <SignUpScene />
       </div>
+      <div className="fixed inset-0 z-10 bg-black/60 backdrop-blur-[1px]" />
 
-      {/* Deep ocean overlay */}
-      <div className="fixed inset-0 z-10 bg-slate-950/55 backdrop-blur-[1px]" />
-
-      {/* Two-column card */}
-      <div className="relative z-20 w-full max-w-5xl mx-4 my-8 flex rounded-3xl overflow-hidden shadow-2xl border border-white/15">
-        {/* LEFT column — book image + branding */}
-        <div className="hidden lg:flex lg:w-5/12 flex-col items-center justify-between bg-teal-950/60 backdrop-blur-lg p-10 border-r border-white/10">
-          <div className="text-center">
-            <h1 className="text-3xl font-extrabold text-white leading-tight">
-              Join
-              <br />
-              BookHub
-            </h1>
-            <p className="text-teal-300 text-sm mt-2">
-              A universe of knowledge awaits
-            </p>
-          </div>
-
-          <div className="w-full flex-1 flex items-center justify-center py-6">
-            <img
-              src={BookImg}
-              alt="Books"
-              className="w-full max-w-xs rounded-2xl object-cover shadow-xl shadow-teal-900/50 border border-white/10"
-            />
-          </div>
-
-          <div className="text-center space-y-1">
-            <p className="text-teal-400 text-xs">Already have an account?</p>
-            <NavLink
-              to="/signin"
-              className="inline-block text-sm font-bold text-white border border-teal-500 px-5 py-2 rounded-full hover:bg-teal-500/30 transition-all cursor-pointer"
-            >
-              Sign In
-            </NavLink>
-          </div>
-        </div>
-
-        {/* RIGHT column — form */}
-        <div className="w-full lg:w-7/12 bg-white/8 backdrop-blur-xl p-8 sm:p-10 overflow-y-auto max-h-screen">
-          <div className="mb-6 text-center lg:text-left">
-            <h2 className="text-2xl font-extrabold text-white">
-              Create Your Account
-            </h2>
-            <p className="text-teal-300 text-sm mt-1">
-              Fill in the details below to get started
-            </p>
-          </div>
-
-          {/* Google button — react-icons FaGoogle */}
-          <button
-            onClick={handleGoogleSignUp}
-            disabled={loading}
-            className="w-full flex items-center justify-center gap-3 py-2.5 mb-5 bg-white/90 rounded-xl hover:bg-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow font-semibold text-gray-700 text-sm cursor-pointer"
-          >
-            <FaGoogle size={18} className="text-red-500" />
-            <span>{loading ? 'Signing up...' : 'Continue with Google'}</span>
-          </button>
-
-          {/* Divider */}
-          <div className="relative mb-5">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/20" />
+      <div className="relative z-20 w-full max-w-5xl mx-4 my-8">
+        {/* Outer glow ring — white only */}
+        <div className="absolute -inset-px rounded-3xl bg-white/10 blur-sm" />
+        <div className="relative flex rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+          {/* LEFT column */}
+          <div className="hidden lg:flex lg:w-5/12 flex-col items-center justify-between bg-black/50 backdrop-blur-lg p-10 border-r border-white/8">
+            <div className="text-center">
+              <h1 className="text-3xl font-extrabold text-white leading-tight">
+                Join
+                <br />
+                BookHub
+              </h1>
+              <p className="text-white/40 text-sm mt-2">
+                A universe of knowledge awaits
+              </p>
             </div>
-            <div className="relative flex justify-center text-xs">
-              <span className="px-3 text-white/50">OR SIGN UP WITH EMAIL</span>
+            <div className="w-full flex-1 flex items-center justify-center py-6">
+              <img
+                src={BookImg}
+                alt="Books"
+                className="w-full max-w-xs rounded-2xl object-cover shadow-xl shadow-black/60 border border-white/10 opacity-80"
+              />
+            </div>
+            <div className="text-center space-y-2">
+              <p className="text-white/35 text-xs">Already have an account?</p>
+              <NavLink
+                to="/signin"
+                className="inline-block text-sm font-bold text-white border border-white/30 px-5 py-2 rounded-full hover:bg-white/10 transition-all cursor-pointer"
+              >
+                Sign In
+              </NavLink>
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Row 1 — Name + Profile Image */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className={labelCls}>Full Name</label>
-                <div className="relative">
-                  <MdPersonOutline
-                    size={17}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-teal-400"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className={inputCls}
-                  />
-                </div>
+          {/* RIGHT column */}
+          <div className="w-full lg:w-7/12 bg-white/5 backdrop-blur-xl overflow-y-auto max-h-screen">
+            {/* Top accent bar — white */}
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+            <div className="p-8 sm:p-10">
+              <div className="mb-6 text-center lg:text-left">
+                <h2 className="text-2xl font-extrabold text-white">
+                  Create Your Account
+                </h2>
+                <p className="text-white/40 text-sm mt-1">
+                  Fill in the details below to get started
+                </p>
               </div>
-              <div>
-                <label className={labelCls}>Profile Image</label>
-                <div className="relative">
-                  <MdOutlineImage
-                    size={17}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-teal-400 z-10"
-                  />
-                  <input
-                    type="file"
-                    onChange={(e) => setProfileFile(e.target.files[0])}
-                    className="w-full pl-10 pr-3 py-2 bg-white/10 border border-white/25 text-white/70 rounded-lg text-sm file:mr-2 file:py-0.5 file:px-2 file:rounded file:border-0 file:bg-teal-500 file:text-white file:text-xs file:cursor-pointer outline-none"
-                  />
-                </div>
+
+              {/* Google button */}
+              <button
+                onClick={handleGoogleSignUp}
+                disabled={loading}
+                className="w-full flex items-center justify-center gap-3 py-2.5 mb-5 bg-white/10 border border-white/20 rounded-xl hover:bg-white/15 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed font-semibold text-white text-sm cursor-pointer"
+              >
+                <FaGoogle size={17} className="text-white/70" />
+                <span>
+                  {loading ? 'Signing up...' : 'Continue with Google'}
+                </span>
+              </button>
+
+              {/* Divider */}
+              <div className="flex items-center gap-3 mb-5">
+                <div className="flex-1 h-px bg-white/10" />
+                <span className="text-xs text-white/30 uppercase tracking-widest">
+                  or
+                </span>
+                <div className="flex-1 h-px bg-white/10" />
               </div>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelCls}>Full Name</label>
+                    <div className="relative">
+                      <MdPersonOutline
+                        size={17}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-white/35"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Your name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className={inputCls}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className={labelCls}>Profile Image</label>
+                    <div className="relative">
+                      <MdOutlineImage
+                        size={17}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-white/35 z-10"
+                      />
+                      <input
+                        type="file"
+                        onChange={(e) => setProfileFile(e.target.files[0])}
+                        className="w-full pl-10 pr-3 py-2 bg-white/5 border border-white/15 text-white/60 rounded-xl text-sm file:mr-2 file:py-0.5 file:px-2 file:rounded file:border-0 file:bg-white/20 file:text-white file:text-xs file:cursor-pointer outline-none hover:border-white/35 transition-all"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelCls}>Email</label>
+                    <div className="relative">
+                      <MdOutlineEmail
+                        size={17}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-white/35"
+                      />
+                      <input
+                        type="email"
+                        placeholder="you@email.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className={inputCls}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className={labelCls}>Address</label>
+                    <div className="relative">
+                      <MdOutlineLocationOn
+                        size={17}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-white/35"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Your address"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        className={inputCls}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelCls}>Password</label>
+                    <div className="relative">
+                      <RiLockPasswordLine
+                        size={17}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-white/35"
+                      />
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Min 6 chars, A, 1, @"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className={inputCls + ' pr-10'}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleToggle}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-white/35 hover:text-white transition-colors cursor-pointer"
+                      >
+                        {showPassword ? (
+                          <AiOutlineEyeInvisible size={18} />
+                        ) : (
+                          <AiOutlineEye size={18} />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <label className={labelCls}>Confirm Password</label>
+                    <div className="relative">
+                      <RiLockPasswordLine
+                        size={17}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-white/35"
+                      />
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Repeat password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className={inputCls}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-3 mt-1 bg-white text-black font-bold rounded-xl hover:bg-white/90 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-white/10 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer tracking-wide flex items-center justify-center gap-2"
+                >
+                  {loading ? (
+                    <>
+                      <svg
+                        className="animate-spin h-4 w-4"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v8z"
+                        />
+                      </svg>
+                      Creating Account...
+                    </>
+                  ) : (
+                    'Create Account'
+                  )}
+                </button>
+              </form>
+
+              <p className="text-sm text-center text-white/30 mt-5 lg:hidden">
+                Already have an account?{' '}
+                <NavLink
+                  to="/signin"
+                  className="text-white font-semibold hover:text-white/70 transition-colors"
+                >
+                  Sign In
+                </NavLink>
+              </p>
             </div>
-
-            {/* Row 2 — Email + Address */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className={labelCls}>Email</label>
-                <div className="relative">
-                  <MdOutlineEmail
-                    size={17}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-teal-400"
-                  />
-                  <input
-                    type="email"
-                    placeholder="you@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className={inputCls}
-                  />
-                </div>
-              </div>
-              <div>
-                <label className={labelCls}>Address</label>
-                <div className="relative">
-                  <MdOutlineLocationOn
-                    size={17}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-teal-400"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Your address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    className={inputCls}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Row 3 — Password + Confirm */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className={labelCls}>Password</label>
-                <div className="relative">
-                  <RiLockPasswordLine
-                    size={17}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-teal-400"
-                  />
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Min 6 chars, A, 1, @"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className={inputCls + ' pr-10'}
-                  />
-                  <button
-                    type="button"
-                    onClick={handleToggle}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors"
-                  >
-                    {showPassword ? (
-                      <AiOutlineEyeInvisible size={18} />
-                    ) : (
-                      <AiOutlineEye size={18} />
-                    )}
-                  </button>
-                </div>
-              </div>
-              <div>
-                <label className={labelCls}>Confirm Password</label>
-                <div className="relative">
-                  <RiLockPasswordLine
-                    size={17}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-teal-400"
-                  />
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Repeat password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    className={inputCls}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Submit */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3 mt-2 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-bold rounded-xl hover:from-teal-400 hover:to-emerald-400 focus:ring-4 focus:ring-teal-400/40 transition-all duration-300 shadow-lg hover:shadow-teal-500/30 disabled:opacity-50 disabled:cursor-not-allowed tracking-wide cursor-pointer"
-            >
-              {loading ? 'Creating Account...' : 'Create Account'}
-            </button>
-          </form>
-
-          {/* Mobile sign-in link */}
-          <p className="text-sm text-center text-white/50 mt-5 lg:hidden">
-            Already have an account?{' '}
-            <NavLink
-              to="/signin"
-              className="text-teal-300 font-semibold hover:text-teal-200 transition-colors"
-            >
-              Sign In
-            </NavLink>
-          </p>
+          </div>
         </div>
       </div>
     </div>
