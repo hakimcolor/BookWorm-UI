@@ -107,6 +107,32 @@ function Pencil({ position, speed = 1.2 }) {
   );
 }
 
+// Floating bookmark
+function Bookmark({ position, color = '#ef4444', speed = 1.0 }) {
+  const ref = useRef();
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime() * speed;
+    ref.current.rotation.z = Math.sin(t * 0.6) * 0.15;
+    ref.current.position.y = position[1] + Math.sin(t * 0.8) * 0.2;
+  });
+  const shape = useMemo(() => {
+    const s = new THREE.Shape();
+    s.moveTo(-0.2, 0.7);
+    s.lineTo(0.2, 0.7);
+    s.lineTo(0.2, -0.5);
+    s.lineTo(0, -0.3);
+    s.lineTo(-0.2, -0.5);
+    s.closePath();
+    return s;
+  }, []);
+  return (
+    <mesh ref={ref} position={position}>
+      <extrudeGeometry args={[shape, { depth: 0.04, bevelEnabled: false }]} />
+      <meshStandardMaterial color={color} roughness={0.3} metalness={0.2} />
+    </mesh>
+  );
+}
+
 // Floating atom / knowledge symbol
 function KnowledgeAtom({ position, speed = 0.7 }) {
   const ref = useRef();
@@ -298,6 +324,10 @@ export default function BookScene() {
 
       {/* Knowledge atom */}
       <KnowledgeAtom position={[-3, 0, 0]} speed={0.8} />
+
+      {/* Bookmarks */}
+      <Bookmark position={[1.5, -3, 0.5]} color="#ef4444" speed={1.1} />
+      <Bookmark position={[-1.8, 2.5, -0.5]} color="#d4af37" speed={0.85} />
 
       {/* Pencils */}
       <Pencil position={[-1.5, 0.8, 1.5]} speed={1.1} />
