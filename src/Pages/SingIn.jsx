@@ -420,7 +420,7 @@ const SignIn = () => {
           <button
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full py-3 px-4 bg-white/90 border border-white/30 rounded-xl flex items-center justify-center gap-3 hover:bg-white transition-all duration-300 font-semibold text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed shadow"
+            className="w-full py-3 px-4 bg-white/90 border border-white/30 rounded-xl flex items-center justify-center gap-3 hover:bg-white transition-all duration-300 font-semibold text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed shadow cursor-pointer"
           >
             <FcGoogle size={24} />
             <span>Continue with Google</span>
@@ -484,7 +484,7 @@ const SignIn = () => {
                 type="button"
                 onClick={handleForgotPassword}
                 disabled={!email}
-                className={`text-sm ${email ? 'text-amber-300 hover:text-amber-200 hover:underline' : 'text-white/30 cursor-not-allowed'}`}
+                className={`text-sm cursor-pointer ${email ? 'text-amber-300 hover:text-amber-200 hover:underline' : 'text-white/30 cursor-not-allowed'}`}
               >
                 Forgot Password?
               </button>
@@ -493,7 +493,7 @@ const SignIn = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-lg hover:from-amber-400 hover:to-orange-400 focus:ring-4 focus:ring-amber-300/50 transition-all duration-300 shadow-lg hover:shadow-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-lg hover:from-amber-400 hover:to-orange-400 focus:ring-4 focus:ring-amber-300/50 transition-all duration-300 shadow-lg hover:shadow-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>

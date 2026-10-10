@@ -189,7 +189,7 @@ const SignUp = () => {
       </div>
 
       {/* Deep ocean overlay */}
-      <div className="fixed inset-0 z-10 bg-cyan-950/55 backdrop-blur-[2px]" />
+      <div className="fixed inset-0 z-10 bg-slate-950/55 backdrop-blur-[1px]" />
 
       {/* Two-column card */}
       <div className="relative z-20 w-full max-w-5xl mx-4 my-8 flex rounded-3xl overflow-hidden shadow-2xl border border-white/15">
@@ -218,7 +218,7 @@ const SignUp = () => {
             <p className="text-teal-400 text-xs">Already have an account?</p>
             <NavLink
               to="/signin"
-              className="inline-block text-sm font-bold text-white border border-teal-500 px-5 py-2 rounded-full hover:bg-teal-500/30 transition-all"
+              className="inline-block text-sm font-bold text-white border border-teal-500 px-5 py-2 rounded-full hover:bg-teal-500/30 transition-all cursor-pointer"
             >
               Sign In
             </NavLink>
@@ -240,7 +240,7 @@ const SignUp = () => {
           <button
             onClick={handleGoogleSignUp}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 py-2.5 mb-5 bg-white/90 rounded-xl hover:bg-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow font-semibold text-gray-700 text-sm"
+            className="w-full flex items-center justify-center gap-3 py-2.5 mb-5 bg-white/90 rounded-xl hover:bg-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow font-semibold text-gray-700 text-sm cursor-pointer"
           >
             <FaGoogle size={18} className="text-red-500" />
             <span>{loading ? 'Signing up...' : 'Continue with Google'}</span>
@@ -378,7 +378,7 @@ const SignUp = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 mt-2 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-bold rounded-xl hover:from-teal-400 hover:to-emerald-400 focus:ring-4 focus:ring-teal-400/40 transition-all duration-300 shadow-lg hover:shadow-teal-500/30 disabled:opacity-50 disabled:cursor-not-allowed tracking-wide"
+              className="w-full py-3 mt-2 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-bold rounded-xl hover:from-teal-400 hover:to-emerald-400 focus:ring-4 focus:ring-teal-400/40 transition-all duration-300 shadow-lg hover:shadow-teal-500/30 disabled:opacity-50 disabled:cursor-not-allowed tracking-wide cursor-pointer"
             >
               {loading ? 'Creating Account...' : 'Create Account'}
             </button>
