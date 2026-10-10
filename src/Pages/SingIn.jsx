@@ -260,7 +260,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet';
 import { AuthContext } from '../Context/AuthContext';
 import { auth } from '../Firebase/Firebase.confige';
-import BookScene from '../Componentes/BookScene';
+import SignInScene from '../Componentes/SignInScene';
 
 const SignIn = () => {
   const { signinUser, signInWithGoogle } = useContext(AuthContext);
@@ -396,11 +396,11 @@ const SignIn = () => {
 
       {/* ── Full-page Three.js background ── */}
       <div className="fixed inset-0 z-0">
-        <BookScene />
+        <SignInScene />
       </div>
 
       {/* ── Dark overlay ── */}
-      <div className="fixed inset-0 z-10 bg-slate-950/60 backdrop-blur-[2px]" />
+      <div className="fixed inset-0 z-10 bg-black/50" />
 
       {/* ── Floating form card ── */}
       <div className="relative z-20 w-full max-w-md mx-4 my-10">

@@ -188,8 +188,8 @@ const SignUp = () => {
         <SignUpScene />
       </div>
 
-      {/* Teal-to-emerald dark overlay — different from SignIn */}
-      <div className="fixed inset-0 z-10 bg-gradient-to-br from-teal-950/75 via-emerald-950/70 to-slate-900/80 backdrop-blur-[2px]" />
+      {/* Deep ocean overlay */}
+      <div className="fixed inset-0 z-10 bg-cyan-950/55 backdrop-blur-[2px]" />
 
       {/* Two-column card */}
       <div className="relative z-20 w-full max-w-5xl mx-4 my-8 flex rounded-3xl overflow-hidden shadow-2xl border border-white/15">
