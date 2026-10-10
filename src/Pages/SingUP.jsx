@@ -337,7 +337,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet';
 import { doc, setDoc } from 'firebase/firestore';
 import axios from 'axios';
-import BookImage from '../assets/book-image.png'; // Add your book-related image here
+import BookScene from '../Componentes/BookScene';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -516,49 +516,53 @@ const SignUp = () => {
     }
   };
 
-  // =================== STYLING WITH IMAGE ===================
+  // =================== STYLING WITH THREE.JS BG ===================
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <Helmet>
         <title>Sign Up | BookHub</title>
       </Helmet>
       <Toaster position="top-right" />
 
-      <div className="w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
-        {/* Left Side - Image */}
-        <div className="lg:w-1/2 hidden lg:block">
-          <img
-            src={BookImage}
-            alt="Books"
-            className="w-full h-full object-cover"
-          />
-        </div>
+      {/* ── Full-page Three.js background ── */}
+      <div className="fixed inset-0 z-0">
+        <BookScene />
+      </div>
 
-        {/* Right Side - Form */}
-        <div className="w-full lg:w-1/2 p-8 sm:p-10 space-y-6">
-          <h2 className="font-heading text-3xl font-extrabold text-center mb-4">
-            Create Your Account
-          </h2>
+      {/* ── Dark overlay ── */}
+      <div className="fixed inset-0 z-10 bg-slate-950/65 backdrop-blur-[2px]" />
 
-          {/* Google Sign Up Button */}
+      {/* ── Floating form card ── */}
+      <div className="relative z-20 w-full max-w-lg mx-4 my-10">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl p-8 sm:p-10 space-y-5">
+          {/* Header */}
+          <div className="text-center">
+            <p className="text-4xl mb-1">✨</p>
+            <h2 className="text-3xl font-extrabold text-white mb-1">
+              Create Your Account
+            </h2>
+            <p className="text-sm text-amber-200">
+              Join BookHub and start your reading journey
+            </p>
+          </div>
+
+          {/* Google Sign Up */}
           <button
             onClick={handleGoogleSignUp}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 py-3 mb-4 bg-white border-2 border-gray-300 rounded-xl hover:bg-gray-50 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            className="w-full flex items-center justify-center gap-3 py-3 bg-white/90 border border-white/30 rounded-xl hover:bg-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow font-semibold text-gray-700"
           >
             <FcGoogle size={24} />
-            <span className="font-body font-semibold text-gray-700">
-              {loading ? 'Signing up...' : 'Continue with Google'}
-            </span>
+            <span>{loading ? 'Signing up...' : 'Continue with Google'}</span>
           </button>
 
           {/* Divider */}
-          <div className="relative my-4">
+          <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-white/25" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-gray-500 font-medium">
+              <span className="px-4 bg-transparent text-white/60 font-medium">
                 OR
               </span>
             </div>
@@ -566,65 +570,75 @@ const SignUp = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
-            <div className="flex flex-col">
-              <label className="font-medium mb-1">Name</label>
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-1">
+                Name
+              </label>
               <input
                 type="text"
                 placeholder="Enter your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
+                className="w-full px-4 py-3 bg-white/10 border border-white/25 text-white placeholder-white/40 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none transition-all"
               />
             </div>
 
             {/* Profile Image */}
-            <div className="flex flex-col">
-              <label className="font-medium mb-1">Profile Image</label>
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-1">
+                Profile Image
+              </label>
               <input
                 type="file"
                 onChange={(e) => setProfileFile(e.target.files[0])}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
+                className="w-full px-4 py-3 bg-white/10 border border-white/25 text-white/70 rounded-lg file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:bg-amber-500 file:text-white file:text-sm file:cursor-pointer"
               />
             </div>
 
             {/* Address */}
-            <div className="flex flex-col">
-              <label className="font-medium mb-1">Address</label>
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-1">
+                Address
+              </label>
               <input
                 type="text"
                 placeholder="Enter your address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
+                className="w-full px-4 py-3 bg-white/10 border border-white/25 text-white placeholder-white/40 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none transition-all"
               />
             </div>
 
             {/* Email */}
-            <div className="flex flex-col">
-              <label className="font-medium mb-1">Email</label>
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-1">
+                Email
+              </label>
               <input
                 type="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
+                className="w-full px-4 py-3 bg-white/10 border border-white/25 text-white placeholder-white/40 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none transition-all"
               />
             </div>
 
             {/* Password */}
-            <div className="flex flex-col relative">
-              <label className="font-medium mb-1">Password</label>
+            <div className="relative">
+              <label className="block text-sm font-medium text-white/80 mb-1">
+                Password
+              </label>
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
+                className="w-full px-4 py-3 pr-12 bg-white/10 border border-white/25 text-white placeholder-white/40 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none transition-all"
               />
               <button
                 type="button"
                 onClick={handleToggle}
-                className="absolute right-3 mt-13 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                className="absolute right-3 bottom-3 text-white/60 hover:text-white transition-colors"
               >
                 {showPassword ? (
                   <AiOutlineEyeInvisible size={22} />
@@ -635,32 +649,34 @@ const SignUp = () => {
             </div>
 
             {/* Confirm Password */}
-            <div className="flex flex-col">
-              <label className="font-medium mb-1">Confirm Password</label>
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-1">
+                Confirm Password
+              </label>
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Confirm your password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
+                className="w-full px-4 py-3 bg-white/10 border border-white/25 text-white placeholder-white/40 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none transition-all"
               />
             </div>
 
-            {/* Submit Button */}
+            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-orange-600 focus:ring-4 focus:ring-amber-300 transition-all duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-lg hover:from-amber-400 hover:to-orange-400 focus:ring-4 focus:ring-amber-300/50 transition-all duration-300 shadow-lg hover:shadow-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Creating Account...' : 'Sign Up'}
             </button>
           </form>
 
-          <p className="text-sm text-center text-gray-600 mt-4">
+          <p className="text-sm text-center text-white/60">
             Already have an account?{' '}
             <NavLink
               to="/signin"
-              className="text-amber-600 font-semibold hover:text-amber-700 transition-colors"
+              className="text-amber-300 font-semibold hover:text-amber-200 transition-colors"
             >
               Sign In
             </NavLink>

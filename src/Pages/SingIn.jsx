@@ -388,36 +388,30 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <Helmet>
         <title>Sign In | BookHub</title>
       </Helmet>
       <Toaster position="top-right" />
 
-      <div className="w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
-        {/* Left Side - Three.js Book Animation */}
-        <div className="lg:w-1/2 hidden lg:flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 relative overflow-hidden">
-          <div className="absolute inset-0">
-            <BookScene />
-          </div>
-          <div className="relative z-10 text-center px-8 pointer-events-none">
-            <h1 className="text-4xl font-extrabold text-white mb-3 drop-shadow-lg">
-              📚 BookHub
-            </h1>
-            <p className="text-amber-200 text-lg font-medium drop-shadow">
-              Your world of knowledge awaits
-            </p>
-          </div>
-        </div>
+      {/* ── Full-page Three.js background ── */}
+      <div className="fixed inset-0 z-0">
+        <BookScene />
+      </div>
 
-        {/* Right Side - Form */}
-        <div className="w-full lg:w-1/2 p-8 space-y-6">
+      {/* ── Dark overlay ── */}
+      <div className="fixed inset-0 z-10 bg-slate-950/60 backdrop-blur-[2px]" />
+
+      {/* ── Floating form card ── */}
+      <div className="relative z-20 w-full max-w-md mx-4 my-10">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl p-8 space-y-6">
           {/* Header */}
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            <p className="text-4xl mb-1">📚</p>
+            <h2 className="text-3xl font-extrabold text-white mb-1">
               Welcome Back
             </h2>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-amber-200">
               Sign in to continue to BookHub
             </p>
           </div>
@@ -426,7 +420,7 @@ const SignIn = () => {
           <button
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full py-3 px-4 border-2 border-gray-300 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 font-semibold text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 px-4 bg-white/90 border border-white/30 rounded-xl flex items-center justify-center gap-3 hover:bg-white transition-all duration-300 font-semibold text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed shadow"
           >
             <FcGoogle size={24} />
             <span>Continue with Google</span>
@@ -435,10 +429,10 @@ const SignIn = () => {
           {/* Divider */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-white/25" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-gray-500 font-medium">
+              <span className="px-4 bg-transparent text-white/60 font-medium">
                 Or sign in with email
               </span>
             </div>
@@ -447,7 +441,7 @@ const SignIn = () => {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-white/80 mb-1">
                 Email
               </label>
               <input
@@ -455,12 +449,12 @@ const SignIn = () => {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
+                className="w-full px-4 py-3 bg-white/10 border border-white/25 text-white placeholder-white/40 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-white/80 mb-1">
                 Password
               </label>
               <div className="relative">
@@ -469,12 +463,12 @@ const SignIn = () => {
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-3 pr-12 bg-white/10 border border-white/25 text-white placeholder-white/40 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors"
                 >
                   {showPassword ? (
                     <AiOutlineEyeInvisible size={22} />
@@ -490,11 +484,7 @@ const SignIn = () => {
                 type="button"
                 onClick={handleForgotPassword}
                 disabled={!email}
-                className={`text-sm ${
-                  email
-                    ? 'text-amber-600 hover:text-amber-700 hover:underline'
-                    : 'text-gray-400 cursor-not-allowed'
-                }`}
+                className={`text-sm ${email ? 'text-amber-300 hover:text-amber-200 hover:underline' : 'text-white/30 cursor-not-allowed'}`}
               >
                 Forgot Password?
               </button>
@@ -503,18 +493,17 @@ const SignIn = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-orange-600 focus:ring-4 focus:ring-amber-300 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-lg hover:from-amber-400 hover:to-orange-400 focus:ring-4 focus:ring-amber-300/50 transition-all duration-300 shadow-lg hover:shadow-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
-          {/* Footer */}
-          <p className="text-center text-sm text-gray-600">
+          <p className="text-center text-sm text-white/60">
             Don't have an account?{' '}
             <NavLink
               to="/signup"
-              className="text-amber-600 font-semibold hover:text-amber-700 transition-colors"
+              className="text-amber-300 font-semibold hover:text-amber-200 transition-colors"
             >
               Sign Up
             </NavLink>
