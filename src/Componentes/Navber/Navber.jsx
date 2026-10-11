@@ -1,9 +1,10 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion'; // eslint-disable-line
 import gsap from 'gsap';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { FaBookOpen } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,182 +14,185 @@ const Navbar = () => {
   const navigate = useNavigate();
   const navRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  if (loading) return null;
-
-  // GSAP navbar entrance
   useEffect(() => {
+    if (!navRef.current) return;
     gsap.fromTo(
       navRef.current,
       { y: -80, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }
+      { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }
     );
   }, []);
 
-  // Show login success SweetAlert2
   useEffect(() => {
-    if (user) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Login Successful!',
-        text: `Welcome, ${user.displayName || user.email}`,
-        timer: 1800,
-        showConfirmButton: false,
-      });
-    }
-  }, [user]);
+    const handler = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handler);
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  if (loading) return null;
 
   const getMenuItems = () => {
     if (!user)
       return [
         { to: '/', label: 'Home' },
-        { to: '/signin', label: 'Login' },
+        { to: '/signin', label: 'Sign In' },
       ];
-
     if (role === 'admin')
       return [
         { to: '/admin', label: 'Dashboard' },
-        { to: '/admin/managebook', label: 'Manage Books' },
-        { to: '/admin/manageusers', label: 'Manage Users' },
+        { to: '/admin/managebook', label: 'Books' },
+        { to: '/admin/manageusers', label: 'Users' },
         { to: '/admin/moderatereviews', label: 'Reviews' },
       ];
-
     return [
       { to: '/', label: 'Home' },
-      { to: '/browsebookspage', label: 'Browse Books' },
+      { to: '/browsebookspage', label: 'Browse' },
       { to: '/mylibrary', label: 'My Library' },
-      { to: '/recomendations', label: 'Recommendations' },
+      { to: '/recomendations', label: 'For You' },
     ];
   };
 
   const handleLogout = async () => {
-    // Show SweetAlert2 confirm
     const result = await Swal.fire({
-      title: 'Are you sure?',
-      text: 'Do you want to logout?',
+      title: 'Logout?',
+      text: 'Are you sure you want to sign out?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#f97316', // orange
-      cancelButtonColor: '#6b7280', // gray
-      confirmButtonText: 'Yes, logout!',
-      cancelButtonText: 'Cancel',
+      confirmButtonColor: '#111',
+      cancelButtonColor: '#555',
+      confirmButtonText: 'Yes, logout',
+      background: '#1a1a1a',
+      color: '#fff',
     });
-
     if (result.isConfirmed) {
       await signoutUser();
-      toast.success('Logout Successful!', {
-        position: 'top-right',
-        autoClose: 2000,
-      });
+      toast.success('Signed out successfully');
       navigate('/signin');
       setOpen(false);
     }
   };
 
+  const items = getMenuItems();
+
   return (
     <>
       <header
         ref={navRef}
-        className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-md"
+        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+          scrolled
+            ? 'bg-black/90 backdrop-blur-xl shadow-lg shadow-black/30 border-b border-white/8'
+            : 'bg-black/60 backdrop-blur-md'
+        }`}
       >
         <nav className="max-w-7xl mx-auto h-16 px-6 flex items-center justify-between">
           {/* Logo */}
-          <motion.span
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="text-2xl font-bold text-orange-600 cursor-pointer"
-          >
-            BookWorm
-          </motion.span>
+          <NavLink to="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-white/15 transition-all">
+              <FaBookOpen size={15} className="text-white" />
+            </div>
+            <span className="text-xl font-extrabold text-white tracking-tight group-hover:text-white/80 transition-colors">
+              Book<span className="text-white/50">Worm</span>
+            </span>
+          </NavLink>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex gap-6 items-center">
-            {getMenuItems().map((item, i) => (
-              <NavLink key={i} to={item.to} className="relative">
+          <div className="hidden md:flex items-center gap-1">
+            {items.map((item, i) => (
+              <NavLink key={i} to={item.to}>
                 {({ isActive }) => (
-                  <>
-                    <motion.span
-                      whileHover={{ y: -2 }}
-                      className={`px-2 py-1 font-medium transition
-                        ${
-                          isActive
-                            ? 'text-orange-600'
-                            : 'text-gray-600 hover:text-orange-600'
-                        }`}
-                    >
-                      {item.label}
-                    </motion.span>
-
+                  <motion.span
+                    whileHover={{ y: -1 }}
+                    className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${
+                      isActive
+                        ? 'text-white bg-white/10'
+                        : 'text-white/55 hover:text-white hover:bg-white/8'
+                    }`}
+                  >
+                    {item.label}
                     {isActive && (
                       <motion.span
-                        layoutId="activeNav"
-                        className="absolute left-0 -bottom-1 h-[2px] w-full bg-orange-600 rounded"
+                        layoutId="navUnderline"
+                        className="absolute bottom-1 left-3 right-3 h-px bg-white/60 rounded"
                       />
                     )}
-                  </>
+                  </motion.span>
                 )}
               </NavLink>
             ))}
           </div>
 
-          {/* Desktop User */}
-          {user && (
-            <div className="hidden md:flex items-center gap-3">
-              {/* Profile Image */}
-              <img
-                src={user.photoURL || undefined}
-                alt="Profile"
-                className="w-9 h-9 rounded-full object-cover border-2 border-orange-400"
-                onError={(e) =>
-                  (e.currentTarget.src =
-                    'https://i.ibb.co/2N2r2B6/default-user.png')
-                }
-              />
-              <span className="text-sm text-gray-600 max-w-[120px] truncate">
-                {user.displayName || user.email}
-              </span>
-              <motion.button
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleLogout}
-                className="px-4 py-1.5 rounded-full text-sm font-medium
-                bg-gradient-to-r from-red-100 to-red-200 text-red-600 cursor-pointer"
-              >
-                Logout
-              </motion.button>
-            </div>
-          )}
+          {/* Desktop right */}
+          <div className="hidden md:flex items-center gap-3">
+            {user ? (
+              <>
+                <img
+                  src={
+                    user.photoURL || 'https://i.ibb.co/2N2r2B6/default-user.png'
+                  }
+                  alt="Profile"
+                  className="w-8 h-8 rounded-full object-cover border border-white/25"
+                  onError={(e) =>
+                    (e.currentTarget.src =
+                      'https://i.ibb.co/2N2r2B6/default-user.png')
+                  }
+                />
+                <span className="text-sm text-white/50 max-w-[110px] truncate">
+                  {user.displayName || user.email}
+                </span>
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={handleLogout}
+                  className="px-4 py-1.5 rounded-lg text-sm font-semibold bg-white/8 border border-white/15 text-white/70 hover:bg-white/15 hover:text-white transition-all cursor-pointer"
+                >
+                  Logout
+                </motion.button>
+              </>
+            ) : (
+              <NavLink to="/signup">
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-5 py-2 rounded-lg text-sm font-bold bg-white text-black hover:bg-white/90 transition-all shadow-lg shadow-white/10 cursor-pointer"
+                >
+                  Get Started
+                </motion.button>
+              </NavLink>
+            )}
+          </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden text-2xl text-gray-700 cursor-pointer"
+            className="md:hidden text-white/70 hover:text-white transition-colors cursor-pointer p-1"
           >
-            {open ? <FiX /> : <FiMenu />}
+            {open ? <FiX size={22} /> : <FiMenu size={22} />}
           </button>
         </nav>
 
-        {/* Mobile Menu */}
+        {/* Mobile drawer */}
         <AnimatePresence>
           {open && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              className="md:hidden bg-white/90 backdrop-blur-lg shadow-lg"
+              transition={{ duration: 0.3 }}
+              className="md:hidden bg-black/95 backdrop-blur-xl border-t border-white/8"
             >
-              <div className="flex flex-col gap-4 px-6 py-6">
-                {getMenuItems().map((item, i) => (
+              <div className="flex flex-col gap-1 px-5 py-5">
+                {items.map((item, i) => (
                   <NavLink
                     key={i}
                     to={item.to}
                     onClick={() => setOpen(false)}
                     className={({ isActive }) =>
-                      `font-medium transition ${
+                      `px-4 py-3 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                         isActive
-                          ? 'text-orange-600'
-                          : 'text-gray-700 hover:text-orange-600'
+                          ? 'bg-white/10 text-white'
+                          : 'text-white/55 hover:bg-white/8 hover:text-white'
                       }`
                     }
                   >
@@ -196,36 +200,45 @@ const Navbar = () => {
                   </NavLink>
                 ))}
 
-                {user && (
-                  <div className="flex flex-col items-start gap-2 mt-2">
+                {user ? (
+                  <div className="flex items-center gap-3 px-4 pt-4 border-t border-white/10 mt-2">
                     <img
-                      src={user.photoURL || undefined}
+                      src={
+                        user.photoURL ||
+                        'https://i.ibb.co/2N2r2B6/default-user.png'
+                      }
                       alt="Profile"
-                      className="w-10 h-10 rounded-full object-cover border-2 border-orange-400"
+                      className="w-9 h-9 rounded-full object-cover border border-white/25"
                       onError={(e) =>
                         (e.currentTarget.src =
                           'https://i.ibb.co/2N2r2B6/default-user.png')
                       }
                     />
-                    <span className="text-sm text-gray-600 truncate max-w-[180px]">
+                    <span className="text-sm text-white/50 truncate flex-1">
                       {user.displayName || user.email}
                     </span>
                     <button
                       onClick={handleLogout}
-                      className="mt-2 px-4 py-2 rounded-full text-sm bg-red-100 text-red-600 cursor-pointer"
+                      className="text-sm text-white/60 hover:text-white border border-white/15 px-3 py-1.5 rounded-lg hover:bg-white/10 transition-all cursor-pointer"
                     >
                       Logout
                     </button>
                   </div>
+                ) : (
+                  <NavLink
+                    to="/signup"
+                    onClick={() => setOpen(false)}
+                    className="mt-3 mx-4 py-2.5 rounded-lg bg-white text-black text-sm font-bold text-center hover:bg-white/90 transition-all cursor-pointer"
+                  >
+                    Get Started
+                  </NavLink>
                 )}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </header>
-
-      {/* React Toast container */}
-      <ToastContainer />
+      <ToastContainer theme="dark" />
     </>
   );
 };
