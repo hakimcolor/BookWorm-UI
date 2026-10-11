@@ -383,6 +383,8 @@ function SceneContent() {
       <FloatPencil position={[-4.5, -1.5, 1]} speed={0.9} />
       <FloatPencil position={[4.8, 1.0, 0.5]} speed={0.8} />
       <FloatPencil position={[0, 4.2, -1]} speed={1.0} />
+      <FloatPencil position={[-2.8, -3.5, 0]} speed={0.85} />
+      <FloatPencil position={[3.5, -3.2, 0.5]} speed={0.95} />
     </>
   );
 }
