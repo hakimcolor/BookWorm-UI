@@ -372,6 +372,18 @@ function SceneContent() {
         rotY={-0.3}
         speed={0.75}
       />
+      <CornerBook
+        position={[-5.5, -0.3, -0.8]}
+        color="#f59e0b"
+        rotY={0.4}
+        speed={0.62}
+      />
+      <CornerBook
+        position={[5.5, 0.5, -0.8]}
+        color="#ec4899"
+        rotY={-0.35}
+        speed={0.58}
+      />
     </>
   );
 }
