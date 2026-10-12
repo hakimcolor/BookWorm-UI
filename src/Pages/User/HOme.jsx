@@ -488,7 +488,7 @@ const HOme = () => {
       </section>
 
       {/* ══ STATS ══════════════════════════════════════════ */}
-      <section className="py-16 border-y border-white/6 bg-white/[0.02]">
+      <section className="py-16 border-y border-violet-500/10 bg-gradient-to-r from-violet-950/30 via-indigo-950/20 to-violet-950/30">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((s, i) => (
             <motion.div
