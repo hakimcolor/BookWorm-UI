@@ -89,8 +89,8 @@ const Navbar = () => {
         <nav className="max-w-7xl mx-auto h-16 px-6 flex items-center justify-between">
           {/* Logo */}
           <NavLink to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-white/15 transition-all">
-              <FaBookOpen size={15} className="text-white" />
+            <div className="w-8 h-8 rounded-lg bg-violet-500/15 border border-violet-500/30 flex items-center justify-center group-hover:bg-violet-500/25 transition-all">
+              <FaBookOpen size={15} className="text-violet-300" />
             </div>
             <span className="text-xl font-extrabold text-white tracking-tight group-hover:text-white/80 transition-colors">
               Book<span className="text-white/50">Worm</span>
@@ -106,15 +106,15 @@ const Navbar = () => {
                     whileHover={{ y: -1 }}
                     className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${
                       isActive
-                        ? 'text-white bg-white/10'
-                        : 'text-white/55 hover:text-white hover:bg-white/8'
+                        ? 'text-white bg-violet-500/15'
+                        : 'text-violet-200/55 hover:text-white hover:bg-violet-500/10'
                     }`}
                   >
                     {item.label}
                     {isActive && (
                       <motion.span
                         layoutId="navUnderline"
-                        className="absolute bottom-1 left-3 right-3 h-px bg-white/60 rounded"
+                        className="absolute bottom-1 left-3 right-3 h-px bg-violet-400/70 rounded"
                       />
                     )}
                   </motion.span>
@@ -145,7 +145,7 @@ const Navbar = () => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={handleLogout}
-                  className="px-4 py-1.5 rounded-lg text-sm font-semibold bg-white/8 border border-white/15 text-white/70 hover:bg-white/15 hover:text-white transition-all cursor-pointer"
+                  className="px-4 py-1.5 rounded-lg text-sm font-semibold bg-violet-500/8 border border-violet-500/20 text-violet-200/70 hover:bg-violet-500/20 hover:text-white transition-all cursor-pointer"
                 >
                   Logout
                 </motion.button>
