@@ -521,10 +521,12 @@ const HOme = () => {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <span className="text-xs text-violet-400/70 tracking-widest uppercase font-semibold">
+          <span className="text-xs text-violet-400/80 tracking-widest uppercase font-semibold bg-violet-500/10 border border-violet-500/20 px-4 py-1.5 rounded-full inline-block">
             Handpicked
           </span>
-          <h2 className="text-5xl font-bold text-white mt-2">Featured Books</h2>
+          <h2 className="text-5xl font-bold text-white mt-4">
+            Featured <span className="text-violet-400">Books</span>
+          </h2>
           <p className="text-white/35 mt-3 max-w-md mx-auto text-sm">
             Our community's most loved reads this month
           </p>
