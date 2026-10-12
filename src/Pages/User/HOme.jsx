@@ -313,9 +313,9 @@ const HOme = () => {
         <motion.div style={{ y: heroBgY }} className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-[#07050f]" />
           {/* Colour glow orbs */}
-          <div className="absolute top-1/4 right-1/4 w-[520px] h-[520px] rounded-full bg-violet-600/12 blur-[130px]" />
-          <div className="absolute bottom-1/4 left-1/5 w-[400px] h-[400px] rounded-full bg-indigo-600/10 blur-[100px]" />
-          <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] rounded-full bg-amber-500/6 blur-[100px]" />
+          <div className="absolute top-1/4 right-1/4 w-[520px] h-[520px] rounded-full bg-violet-600/15 blur-[130px]" />
+          <div className="absolute bottom-1/4 left-1/5 w-[400px] h-[400px] rounded-full bg-indigo-600/12 blur-[100px]" />
+          <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] rounded-full bg-amber-500/8 blur-[100px]" />
           {/* Dot grid */}
           <div
             className="absolute inset-0 opacity-[0.03]"
