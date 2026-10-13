@@ -15,105 +15,96 @@ import {
   FaQuoteLeft,
   FaFire,
   FaGlobeAmericas,
-  FaMagic,
+  FaShoppingCart,
+  FaRegHeart,
+  FaInstagram,
+  FaTwitter,
+  FaFacebook,
 } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
-import { MdAutoAwesome } from 'react-icons/md';
+import {
+  MdAutoAwesome,
+  MdLocalShipping,
+  MdSupportAgent,
+  MdVerified,
+  MdCollectionsBookmark,
+} from 'react-icons/md';
 
-/* ══════════════════════════════════════════════════════════
-   FLOATING PARTICLE FIELD
-══════════════════════════════════════════════════════════ */
-function ParticleField() {
-  const particles = Array.from({ length: 28 }, (_, i) => ({
-    id: i,
-    x: `${Math.random() * 100}%`,
-    y: Math.random() * 100,
-    size: Math.random() * 3 + 1,
-    duration: Math.random() * 8 + 6,
-    delay: Math.random() * 4,
-    color: [
-      'bg-violet-400',
-      'bg-indigo-400',
-      'bg-purple-400',
-      'bg-fuchsia-400',
-    ][i % 4],
-  }));
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className={`absolute rounded-full opacity-0 ${p.color}`}
-          style={{ left: p.x, top: `${p.y}%`, width: p.size, height: p.size }}
-          animate={{ opacity: [0, 0.6, 0], y: [0, -60, -120] }}
-          transition={{
-            duration: p.duration,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: 'easeOut',
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+/* ── COLORS ──────────────────────────────────────────────── */
+// Primary:    #6B2737  (Deep Burgundy)
+// Secondary:  #C9A227  (Warm Gold)
+// Background: #F8F5EF  (Warm Ivory)
+// Card:       #FFFFFF
+// Text:       #242424
+// Muted:      #777777
+// Border:     #E8E0D4
 
-/* ══════════════════════════════════════════════════════════
-   3D BOOK HERO
-══════════════════════════════════════════════════════════ */
-function HeroBook() {
+/* ── ANIMATED BOOK ───────────────────────────────────────── */
+function AnimatedBook() {
   return (
     <div className="relative" style={{ perspective: '900px' }}>
-      {/* Outer glow */}
       <motion.div
-        animate={{ opacity: [0.3, 0.7, 0.3], scale: [1, 1.05, 1] }}
-        transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
-        className="absolute -inset-8 rounded-3xl bg-violet-500/20 blur-3xl pointer-events-none"
+        animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.06, 1] }}
+        transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+        className="absolute -inset-6 rounded-3xl pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse,rgba(107,39,55,0.18) 0%,transparent 70%)',
+        }}
       />
-
       <motion.div
-        animate={{ rotateY: [-12, 12, -12], y: [0, -14, 0] }}
+        animate={{ rotateY: [-8, 8, -8], y: [0, -12, 0] }}
         transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
         style={{ transformStyle: 'preserve-3d' }}
-        className="relative w-48 h-64"
+        className="relative w-52 h-72"
       >
         {/* Cover */}
         <div
-          className="absolute inset-0 rounded-r-xl rounded-l-md flex flex-col items-center justify-center shadow-2xl overflow-hidden"
+          className="absolute inset-0 rounded-r-xl rounded-l-sm flex flex-col items-center justify-center overflow-hidden shadow-2xl"
           style={{
-            background: 'linear-gradient(145deg,#4c1d95,#1e1b4b,#312e81)',
+            background: 'linear-gradient(145deg,#6B2737,#3d151f)',
             backfaceVisibility: 'hidden',
-            border: '1px solid rgba(167,139,250,0.25)',
+            border: '1px solid rgba(201,162,39,0.3)',
           }}
         >
-          <div className="absolute inset-3 border border-violet-400/15 rounded pointer-events-none" />
+          <div
+            className="absolute inset-3 rounded pointer-events-none"
+            style={{ border: '1px solid rgba(201,162,39,0.2)' }}
+          />
           <motion.div
-            animate={{ scale: [1, 1.12, 1], rotate: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 3 }}
-            className="text-violet-300 mb-3"
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ repeat: Infinity, duration: 2.8 }}
+            style={{ color: '#C9A227', marginBottom: 12 }}
           >
             <FaBookOpen size={44} />
           </motion.div>
-          <p className="text-white font-black text-sm tracking-wide">
-            BookWorm
+          <p
+            className="font-black text-sm tracking-wider"
+            style={{ color: '#F8F5EF', fontFamily: 'Playfair Display, serif' }}
+          >
+            The Reading Room
           </p>
           <div className="flex gap-1 mt-2">
             {[0, 1, 2, 3, 4].map((i) => (
-              <FaStar key={i} size={8} className="text-amber-400" />
+              <FaStar key={i} size={9} style={{ color: '#C9A227' }} />
             ))}
           </div>
           <motion.div
             animate={{ x: ['-120%', '220%'] }}
-            transition={{ repeat: Infinity, duration: 2.5, repeatDelay: 2.5 }}
-            className="absolute inset-0 w-1/4 bg-gradient-to-r from-transparent via-white/12 to-transparent skew-x-12 pointer-events-none"
+            transition={{ repeat: Infinity, duration: 2.5, repeatDelay: 3 }}
+            className="absolute inset-0 w-1/4 skew-x-12 pointer-events-none"
+            style={{
+              background:
+                'linear-gradient(90deg,transparent,rgba(201,162,39,0.12),transparent)',
+            }}
           />
         </div>
         {/* Spine */}
         <div
-          className="absolute left-0 top-0 h-full rounded-l-md"
+          className="absolute left-0 top-0 h-full rounded-l-sm"
           style={{
             width: 14,
-            background: 'linear-gradient(to right,#0f0b1f,#4c1d95)',
+            background: 'linear-gradient(to right,#1a060a,#6B2737)',
             transform: 'translateX(-14px) rotateY(90deg)',
             transformOrigin: 'right center',
           }}
@@ -122,36 +113,42 @@ function HeroBook() {
         <div
           className="absolute right-0 top-2 bottom-2"
           style={{
-            width: 6,
+            width: 7,
             background:
-              'repeating-linear-gradient(to bottom,#f1f5f9 0px,#cbd5e1 1px,#f1f5f9 2px)',
+              'repeating-linear-gradient(to bottom,#F8F5EF 0px,#E8E0D4 1px,#F8F5EF 2px)',
             borderRadius: '0 3px 3px 0',
-            transform: 'translateX(6px)',
+            transform: 'translateX(7px)',
           }}
         />
       </motion.div>
 
       {/* Orbit rings */}
-      {[170, 230, 290].map((size, i) => (
+      {[180, 245, 310].map((size, i) => (
         <motion.div
           key={i}
           animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
           transition={{
             repeat: Infinity,
-            duration: 10 + i * 3,
+            duration: 12 + i * 3,
             ease: 'linear',
           }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           style={{
             width: size,
             height: size,
-            border: '1px dashed rgba(139,92,246,0.2)',
+            border: '1px dashed rgba(107,39,55,0.2)',
             borderRadius: '50%',
           }}
         >
           <div
-            className="absolute w-2 h-2 rounded-full bg-violet-400/60"
-            style={{ top: -4, left: '50%', transform: 'translateX(-50%)' }}
+            className="absolute w-2 h-2 rounded-full"
+            style={{
+              background: '#C9A227',
+              opacity: 0.6,
+              top: -4,
+              left: '50%',
+              transform: 'translateX(-50%)',
+            }}
           />
         </motion.div>
       ))}
@@ -159,376 +156,505 @@ function HeroBook() {
   );
 }
 
-/* ══════════════════════════════════════════════════════════
-   DATA
-══════════════════════════════════════════════════════════ */
-const stats = [
+/* ── DATA ─────────────────────────────────────────────────── */
+const benefits = [
   {
-    icon: <FaBook />,
-    value: '10K+',
-    label: 'Books',
-    color: '#7c3aed',
-    bg: 'from-violet-500/15',
+    icon: <MdCollectionsBookmark size={26} />,
+    title: 'Wide Collection',
+    desc: '10,000+ curated titles',
   },
   {
-    icon: <FaUsers />,
-    value: '5K+',
-    label: 'Readers',
-    color: '#f59e0b',
-    bg: 'from-amber-500/15',
+    icon: <MdVerified size={26} />,
+    title: 'Carefully Selected',
+    desc: 'Expert-reviewed books',
   },
   {
-    icon: <FaStar />,
-    value: '50K+',
-    label: 'Reviews',
-    color: '#10b981',
-    bg: 'from-emerald-500/15',
+    icon: <MdLocalShipping size={26} />,
+    title: 'Fast Delivery',
+    desc: 'Ships within 24 hours',
   },
   {
-    icon: <FaHeart />,
-    value: '25K+',
-    label: 'Saved',
-    color: '#f43f5e',
-    bg: 'from-rose-500/15',
+    icon: <MdSupportAgent size={26} />,
+    title: 'Reader Support',
+    desc: 'Help whenever you need',
   },
 ];
 
-const featured = [
+const categories = [
+  { name: 'Fiction & Literature', emoji: '📖', count: '2,400 books' },
+  { name: 'Business & Finance', emoji: '💼', count: '980 books' },
+  { name: 'Personal Development', emoji: '🌱', count: '1,200 books' },
+  { name: 'Science & Technology', emoji: '🔬', count: '1,500 books' },
+  { name: 'History & Biography', emoji: '🏛️', count: '760 books' },
+  { name: "Children's Books", emoji: '🎨', count: '890 books' },
+];
+
+const bestsellers = [
   {
     title: 'The Midnight Library',
     author: 'Matt Haig',
     rating: 4.8,
-    genre: 'Fiction',
-    c: '#7c3aed',
+    reviews: 12400,
+    price: '$14.99',
+    original: '$18.99',
   },
   {
     title: 'Atomic Habits',
     author: 'James Clear',
     rating: 4.9,
-    genre: 'Self-Help',
-    c: '#f59e0b',
+    reviews: 34200,
+    price: '$13.99',
+    original: null,
   },
   {
     title: 'Dune',
     author: 'Frank Herbert',
     rating: 4.7,
-    genre: 'Sci-Fi',
-    c: '#0ea5e9',
+    reviews: 28900,
+    price: '$15.99',
+    original: '$19.99',
   },
   {
     title: 'The Alchemist',
     author: 'Paulo Coelho',
     rating: 4.6,
-    genre: 'Fiction',
-    c: '#10b981',
-  },
-  {
-    title: 'Project Hail Mary',
-    author: 'Andy Weir',
-    rating: 4.8,
-    genre: 'Sci-Fi',
-    c: '#f43f5e',
-  },
-  {
-    title: '1984',
-    author: 'George Orwell',
-    rating: 4.7,
-    genre: 'Dystopia',
-    c: '#6366f1',
+    reviews: 19800,
+    price: '$11.99',
+    original: null,
   },
 ];
 
-const genres = [
-  { name: 'Fiction', emoji: '📖', color: '#7c3aed' },
-  { name: 'Science', emoji: '🔬', color: '#0ea5e9' },
-  { name: 'History', emoji: '🏛️', color: '#f59e0b' },
-  { name: 'Fantasy', emoji: '🧙', color: '#a855f7' },
-  { name: 'Romance', emoji: '💕', color: '#f43f5e' },
-  { name: 'Mystery', emoji: '🔍', color: '#06b6d4' },
-  { name: 'Thriller', emoji: '😱', color: '#f97316' },
-  { name: 'Biography', emoji: '👤', color: '#10b981' },
+const newArrivals = [
+  { title: 'Project Hail Mary', author: 'Andy Weir', label: 'New' },
+  { title: 'Fourth Wing', author: 'Rebecca Yarros', label: 'New' },
+  { title: 'Hello Beautiful', author: 'Ann Napolitano', label: 'New' },
+  { title: 'Happy Place', author: 'Emily Henry', label: 'New' },
 ];
 
-const features = [
-  {
-    icon: <FaSearch size={20} />,
-    title: 'Smart Search',
-    desc: 'Find any book instantly with our intelligent search engine.',
-    color: '#7c3aed',
-  },
-  {
-    icon: <FaRegBookmark size={20} />,
-    title: 'Personal Shelf',
-    desc: 'Organize your reading life with a beautiful personal library.',
-    color: '#f59e0b',
-  },
-  {
-    icon: <FaStar size={20} />,
-    title: 'Community Reviews',
-    desc: 'Read and write honest reviews from real book lovers.',
-    color: '#10b981',
-  },
-  {
-    icon: <FaBell size={20} />,
-    title: 'Smart Picks',
-    desc: 'AI-powered recommendations based on what you love.',
-    color: '#f43f5e',
-  },
-  {
-    icon: <FaFire size={20} />,
-    title: 'Trending Now',
-    desc: 'Discover what the reading community is obsessing over.',
-    color: '#f97316',
-  },
-  {
-    icon: <FaGlobeAmericas size={20} />,
-    title: 'Global Community',
-    desc: 'Connect with readers from over 50 countries worldwide.',
-    color: '#0ea5e9',
-  },
+const authors = [
+  { name: 'Matt Haig', genre: 'Contemporary Fiction', initial: 'M' },
+  { name: 'Brené Brown', genre: 'Self-Help & Research', initial: 'B' },
+  { name: 'Colleen Hoover', genre: 'Romance & Drama', initial: 'C' },
+  { name: 'James Clear', genre: 'Productivity & Habits', initial: 'J' },
 ];
 
 const testimonials = [
   {
-    name: 'Sarah M.',
+    name: 'Sarah Mitchell',
     role: 'Book Club Host',
-    text: 'BookWorm changed how I discover books. The recommendations are always spot on!',
+    text: 'The Reading Room has transformed my reading life. Every recommendation feels personally curated just for me.',
     rating: 5,
-    avatar: 'S',
   },
   {
-    name: 'James K.',
+    name: 'James Thornton',
     role: 'Literature Teacher',
-    text: 'My students love using BookWorm. Finding books that match their level has never been easier.',
+    text: 'Outstanding selection and incredible service. My students love the curated reading lists.',
     rating: 5,
-    avatar: 'J',
   },
   {
-    name: 'Priya S.',
+    name: 'Priya Sharma',
     role: 'Avid Reader',
-    text: "The personal library feature is gorgeous. I track every book I've ever read here.",
+    text: 'The personal shelf feature is beautifully designed. I track every book I have ever read here.',
     rating: 5,
-    avatar: 'P',
   },
 ];
 
-/* ══════════════════════════════════════════════════════════
-   MAIN COMPONENT
-══════════════════════════════════════════════════════════ */
+const whyUs = [
+  {
+    icon: <MdCollectionsBookmark size={22} />,
+    title: 'Curated Selection',
+    desc: 'Every title is hand-selected by our team of passionate readers and editors.',
+  },
+  {
+    icon: <FaSearch size={20} />,
+    title: 'Easy Book Discovery',
+    desc: 'Find exactly what you want with our smart search and recommendation engine.',
+  },
+  {
+    icon: <FaRegBookmark size={20} />,
+    title: 'Smooth Experience',
+    desc: 'From discovery to delivery, we have made every step effortless and enjoyable.',
+  },
+  {
+    icon: <FaBookOpen size={20} />,
+    title: 'Books for Every Stage',
+    desc: 'Whether you are five or ninety-five, we have the perfect book waiting for you.',
+  },
+];
+
+/* ── BOOK CARD ────────────────────────────────────────────── */
+function BookCard({ book, i }) {
+  const [wished, setWished] = useState(false);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: i * 0.08, duration: 0.5 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -6, transition: { duration: 0.2 } }}
+      className="group bg-white rounded-2xl border overflow-hidden hover:shadow-xl transition-all cursor-pointer"
+      style={{ borderColor: '#E8E0D4' }}
+    >
+      {/* Cover placeholder */}
+      <div
+        className="h-52 flex items-center justify-center relative"
+        style={{ background: 'linear-gradient(135deg,#6B273715,#C9A22715)' }}
+      >
+        <div
+          className="w-20 h-28 rounded-md shadow-lg flex items-center justify-center"
+          style={{ background: 'linear-gradient(145deg,#6B2737,#3d151f)' }}
+        >
+          <FaBookOpen size={22} style={{ color: '#C9A227', opacity: 0.8 }} />
+        </div>
+        <button
+          onClick={() => setWished(!wished)}
+          className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer"
+          style={{
+            background: wished ? '#6B2737' : 'rgba(255,255,255,0.9)',
+            border: '1px solid #E8E0D4',
+          }}
+        >
+          <FaHeart size={12} style={{ color: wished ? '#fff' : '#6B2737' }} />
+        </button>
+        {book.original && (
+          <span
+            className="absolute top-3 left-3 text-xs font-bold px-2 py-1 rounded-full text-white"
+            style={{ background: '#6B2737' }}
+          >
+            Sale
+          </span>
+        )}
+      </div>
+      <div className="p-4">
+        <h3
+          className="font-bold leading-snug text-sm line-clamp-2"
+          style={{ color: '#242424', fontFamily: 'Playfair Display, serif' }}
+        >
+          {book.title}
+        </h3>
+        <p className="text-xs mt-1" style={{ color: '#777' }}>
+          {book.author}
+        </p>
+        <div className="flex items-center gap-1.5 mt-2">
+          <div className="flex gap-0.5">
+            {[...Array(5)].map((_, j) => (
+              <FaStar
+                key={j}
+                size={10}
+                style={{
+                  color: j < Math.floor(book.rating) ? '#C9A227' : '#E8E0D4',
+                }}
+              />
+            ))}
+          </div>
+          <span className="text-xs font-semibold" style={{ color: '#777' }}>
+            ({(book.reviews / 1000).toFixed(1)}k)
+          </span>
+        </div>
+        <div className="flex items-center gap-2 mt-2">
+          <span className="font-black text-base" style={{ color: '#6B2737' }}>
+            {book.price}
+          </span>
+          {book.original && (
+            <span className="text-xs line-through" style={{ color: '#aaa' }}>
+              {book.original}
+            </span>
+          )}
+        </div>
+        <button
+          className="mt-3 w-full py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
+          style={{ background: '#6B2737', color: '#F8F5EF' }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = '#4d1c28')}
+          onMouseLeave={(e) => (e.currentTarget.style.background = '#6B2737')}
+        >
+          <FaShoppingCart size={11} /> Add to Cart
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ── MAIN ─────────────────────────────────────────────────── */
 const HOme = () => {
   const [email, setEmail] = useState('');
-  const [activeTab, setActiveTab] = useState('all');
   const heroRef = useRef(null);
-
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
   const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const heroBgY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
+  const heroBgY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
 
-  const fade = (delay = 0) => ({
-    initial: { opacity: 0, y: 32 },
+  const sectionFade = (delay = 0) => ({
+    initial: { opacity: 0, y: 28 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true },
-    transition: { delay, duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
   });
 
   return (
-    <div className="min-h-screen bg-[#070512] text-white overflow-x-hidden font-sans">
-      {/* ══ HERO ════════════════════════════════════════════ */}
+    <div
+      className="min-h-screen overflow-x-hidden"
+      style={{
+        background: '#F8F5EF',
+        color: '#242424',
+        fontFamily: 'Inter,sans-serif',
+      }}
+    >
+      {/* ══ HERO ═══════════════════════════════════════════ */}
       <section
         ref={heroRef}
         className="relative min-h-screen flex items-center overflow-hidden"
       >
         <motion.div style={{ y: heroBgY }} className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[#070512]" />
-          {/* Big glow blobs */}
-          <div className="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full bg-violet-600/15 blur-[160px]" />
-          <div className="absolute -bottom-20 -left-20 w-[500px] h-[500px] rounded-full bg-indigo-600/12 blur-[130px]" />
-          <div className="absolute top-1/2 left-1/3 w-[300px] h-[300px] rounded-full bg-fuchsia-500/8 blur-[100px]" />
-          {/* Grid */}
+          <div className="absolute inset-0" style={{ background: '#F8F5EF' }} />
           <div
-            className="absolute inset-0 opacity-[0.035]"
+            className="absolute top-0 right-0 w-1/2 h-full opacity-40"
+            style={{
+              background: 'linear-gradient(135deg,#6B273708,#C9A22710)',
+            }}
+          />
+          <div
+            className="absolute -top-40 -right-40 rounded-full blur-3xl"
+            style={{
+              width: 600,
+              height: 600,
+              background: 'rgba(107,39,55,0.06)',
+            }}
+          />
+          <div
+            className="absolute bottom-0 left-0 rounded-full blur-3xl"
+            style={{
+              width: 400,
+              height: 400,
+              background: 'rgba(201,162,39,0.06)',
+            }}
+          />
+          {/* Subtle dot grid */}
+          <div
+            className="absolute inset-0 opacity-[0.04]"
             style={{
               backgroundImage:
-                'linear-gradient(rgba(167,139,250,1) 1px,transparent 1px),linear-gradient(90deg,rgba(167,139,250,1) 1px,transparent 1px)',
-              backgroundSize: '60px 60px',
+                'radial-gradient(circle,#6B2737 1px,transparent 1px)',
+              backgroundSize: '28px 28px',
             }}
           />
         </motion.div>
 
-        <ParticleField />
-
         <motion.div
           style={{ opacity: heroOpacity }}
-          className="relative z-20 max-w-7xl mx-auto px-6 w-full pt-24 pb-16 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+          className="relative z-20 max-w-7xl mx-auto px-6 w-full pt-28 pb-16 grid lg:grid-cols-2 gap-16 items-center"
         >
           {/* Left */}
           <div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-              className="inline-flex items-center gap-2 text-xs text-violet-300/80 font-semibold tracking-widest uppercase mb-6 border border-violet-500/30 px-4 py-2 rounded-full bg-violet-500/8"
+              transition={{ delay: 0.1 }}
+              className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase mb-6 px-4 py-2 rounded-full"
+              style={{
+                color: '#6B2737',
+                background: 'rgba(107,39,55,0.08)',
+                border: '1px solid rgba(107,39,55,0.18)',
+              }}
             >
-              <HiSparkles size={12} className="text-violet-400" />
-              Welcome to BookWorm
-              <HiSparkles size={12} className="text-violet-400" />
+              <HiSparkles size={12} style={{ color: '#C9A227' }} />
+              Your Next Chapter Starts Here
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 28 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.7 }}
-              className="text-6xl lg:text-7xl font-black leading-[1.03] mb-6 tracking-tight"
+              className="text-6xl lg:text-7xl font-black leading-[1.04] mb-6"
+              style={{ fontFamily: 'Playfair Display,serif', color: '#242424' }}
             >
-              Read More.
+              Discover Stories
               <br />
-              <span className="relative">
-                <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-indigo-400 bg-clip-text text-transparent">
-                  Know More.
-                </span>
-                <motion.div
-                  animate={{ scaleX: [0, 1] }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-violet-500 to-indigo-500 origin-left"
-                />
-              </span>
+              <span style={{ color: '#6B2737' }}>That Stay</span>
               <br />
-              Be More.
+              With You.
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.6 }}
-              className="text-white/45 text-lg leading-relaxed mb-10 max-w-lg"
+              transition={{ delay: 0.32 }}
+              className="text-lg leading-relaxed mb-10 max-w-lg"
+              style={{ color: '#777' }}
             >
-              Your personal reading universe. Discover 10,000+ books, build your
-              dream library, and join a community of passionate readers from
-              around the world.
+              Explore inspiring reads, timeless classics, and the latest
+              bestsellers — all in one beautifully curated place.
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45 }}
+              transition={{ delay: 0.42 }}
               className="flex gap-4 flex-wrap mb-10"
             >
               <Link
                 to="/browsebookspage"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-bold rounded-2xl hover:from-violet-500 hover:to-indigo-500 hover:-translate-y-0.5 active:translate-y-0 transition-all shadow-xl shadow-violet-500/30 cursor-pointer text-sm"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-sm transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shadow-lg"
+                style={{
+                  background: '#6B2737',
+                  color: '#F8F5EF',
+                  boxShadow: '0 8px 24px rgba(107,39,55,0.28)',
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = '#4d1c28')
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = '#6B2737')
+                }
               >
-                <FaBookOpen size={15} /> Start Reading Free
+                <FaBookOpen size={14} /> Explore Books
               </Link>
               <Link
                 to="/browsebookspage"
-                className="inline-flex items-center gap-2 px-8 py-4 border border-violet-500/30 text-violet-300 font-semibold rounded-2xl hover:bg-violet-500/12 hover:border-violet-400/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer text-sm"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-sm transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                style={{
+                  border: '2px solid #6B2737',
+                  color: '#6B2737',
+                  background: 'transparent',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#6B2737';
+                  e.currentTarget.style.color = '#F8F5EF';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.color = '#6B2737';
+                }}
               >
-                Browse Books <FaArrowRight size={12} />
+                Discover Bestsellers <FaArrowRight size={12} />
               </Link>
             </motion.div>
 
+            {/* Trust badges */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="flex gap-8 flex-wrap"
+              transition={{ delay: 0.55 }}
+              className="flex gap-6 flex-wrap"
             >
-              {[
-                ['10K+', 'Books'],
-                ['5K+', 'Readers'],
-                ['50K+', 'Reviews'],
-              ].map(([v, l], i) => (
-                <div key={i} className="flex flex-col">
-                  <span className="text-2xl font-black text-white">{v}</span>
-                  <span className="text-xs text-white/30 uppercase tracking-widest">
-                    {l}
+              {['10,000+ Books', 'Free Returns', 'Expert Curation'].map(
+                (t, i) => (
+                  <span
+                    key={i}
+                    className="flex items-center gap-1.5 text-sm"
+                    style={{ color: '#777' }}
+                  >
+                    <FaCheckCircle size={13} style={{ color: '#C9A227' }} /> {t}
                   </span>
-                </div>
-              ))}
+                )
+              )}
             </motion.div>
           </div>
 
           {/* Right */}
           <motion.div
-            initial={{ opacity: 0, x: 60, scale: 0.8 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="flex justify-center relative"
+            className="hidden lg:flex justify-center relative"
           >
-            <HeroBook />
+            <AnimatedBook />
             {/* Floating cards */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 3, delay: 0.5 }}
-              className="absolute -left-4 top-8 bg-violet-900/60 border border-violet-500/30 backdrop-blur-xl rounded-2xl px-4 py-3 flex items-center gap-3 shadow-xl"
+              className="absolute -left-8 top-6 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-lg"
+              style={{ background: '#fff', border: '1px solid #E8E0D4' }}
             >
-              <div className="w-9 h-9 rounded-xl bg-amber-500/20 flex items-center justify-center">
-                <FaStar className="text-amber-400" size={16} />
+              <div
+                className="w-9 h-9 rounded-xl flex items-center justify-center"
+                style={{ background: 'rgba(201,162,39,0.12)' }}
+              >
+                <FaStar size={16} style={{ color: '#C9A227' }} />
               </div>
               <div>
-                <p className="text-xs text-white/50">Daily Pick</p>
-                <p className="text-sm font-bold text-white">Atomic Habits</p>
+                <p className="text-xs" style={{ color: '#777' }}>
+                  Top Rated
+                </p>
+                <p className="text-sm font-bold" style={{ color: '#242424' }}>
+                  Atomic Habits
+                </p>
               </div>
             </motion.div>
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ repeat: Infinity, duration: 3.5, delay: 1 }}
-              className="absolute -right-4 bottom-12 bg-indigo-900/60 border border-indigo-500/30 backdrop-blur-xl rounded-2xl px-4 py-3 flex items-center gap-3 shadow-xl"
+              className="absolute -right-6 bottom-10 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-lg"
+              style={{ background: '#fff', border: '1px solid #E8E0D4' }}
             >
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center">
-                <FaUsers className="text-emerald-400" size={16} />
+              <div
+                className="w-9 h-9 rounded-xl flex items-center justify-center"
+                style={{ background: 'rgba(107,39,55,0.1)' }}
+              >
+                <FaUsers size={15} style={{ color: '#6B2737' }} />
               </div>
               <div>
-                <p className="text-xs text-white/50">Online Now</p>
-                <p className="text-sm font-bold text-white">1,234 Readers</p>
+                <p className="text-xs" style={{ color: '#777' }}>
+                  Reading Now
+                </p>
+                <p className="text-sm font-bold" style={{ color: '#242424' }}>
+                  1,234 Readers
+                </p>
               </div>
             </motion.div>
           </motion.div>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Scroll hint */}
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 opacity-30"
         >
-          <span className="text-xs text-violet-300/60 tracking-[0.25em] uppercase">
+          <span
+            className="text-xs tracking-[0.2em] uppercase"
+            style={{ color: '#6B2737' }}
+          >
             Scroll
           </span>
-          <div className="w-px h-10 bg-gradient-to-b from-violet-400/60 to-transparent" />
+          <div
+            className="w-px h-8"
+            style={{
+              background: 'linear-gradient(to bottom,#6B2737,transparent)',
+            }}
+          />
         </motion.div>
       </section>
 
-      {/* ══ STATS STRIP ═════════════════════════════════════ */}
-      <section className="py-14 relative border-y border-violet-500/10 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-950/40 via-indigo-950/30 to-violet-950/40" />
-        <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-5">
-          {stats.map((s, i) => (
+      {/* ══ BENEFITS STRIP ═════════════════════════════════ */}
+      <section
+        className="py-10 border-y"
+        style={{ borderColor: '#E8E0D4', background: '#fff' }}
+      >
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+          {benefits.map((b, i) => (
             <motion.div
               key={i}
-              {...fade(i * 0.1)}
-              whileHover={{ scale: 1.04, y: -4 }}
-              className="group flex items-center gap-4 p-5 rounded-2xl border border-white/6 bg-white/3 hover:bg-white/6 hover:border-white/12 transition-all cursor-default"
+              {...sectionFade(i * 0.08)}
+              className="flex items-center gap-4 group cursor-default"
             >
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-all group-hover:scale-110"
+                className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-all group-hover:scale-110"
                 style={{
-                  background: `${s.color}22`,
-                  color: s.color,
-                  border: `1px solid ${s.color}33`,
+                  background: 'rgba(107,39,55,0.08)',
+                  color: '#6B2737',
+                  border: '1px solid rgba(107,39,55,0.14)',
                 }}
               >
-                {s.icon}
+                {b.icon}
               </div>
               <div>
-                <p className="text-3xl font-black text-white leading-none">
-                  {s.value}
+                <p className="font-bold text-sm" style={{ color: '#242424' }}>
+                  {b.title}
                 </p>
-                <p className="text-xs text-white/30 uppercase tracking-widest mt-0.5">
-                  {s.label}
+                <p className="text-xs" style={{ color: '#777' }}>
+                  {b.desc}
                 </p>
               </div>
             </motion.div>
@@ -536,346 +662,639 @@ const HOme = () => {
         </div>
       </section>
 
-      {/* ══ FEATURED BOOKS ══════════════════════════════════ */}
+      {/* ══ CATEGORIES ═════════════════════════════════════ */}
+      <section className="py-24 max-w-7xl mx-auto px-6">
+        <motion.div {...sectionFade()} className="text-center mb-14">
+          <p
+            className="text-xs font-bold tracking-[0.2em] uppercase mb-3"
+            style={{ color: '#C9A227' }}
+          >
+            Collections
+          </p>
+          <h2
+            className="text-5xl font-black mb-3"
+            style={{ fontFamily: 'Playfair Display,serif', color: '#242424' }}
+          >
+            Explore Our Book Collection
+          </h2>
+          <p className="text-base max-w-md mx-auto" style={{ color: '#777' }}>
+            Find your next favorite read by exploring our curated collections.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {categories.map((c, i) => (
+            <motion.div
+              key={i}
+              {...sectionFade(i * 0.07)}
+              whileHover={{ y: -6, scale: 1.02 }}
+              className="group flex flex-col items-center justify-center gap-3 py-8 px-4 rounded-2xl cursor-pointer transition-all border"
+              style={{ background: '#fff', borderColor: '#E8E0D4' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#6B2737';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 24px rgba(107,39,55,0.12)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = '#E8E0D4';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            >
+              <span className="text-3xl group-hover:scale-110 transition-transform">
+                {c.emoji}
+              </span>
+              <p
+                className="font-bold text-xs text-center"
+                style={{ color: '#242424' }}
+              >
+                {c.name}
+              </p>
+              <p className="text-xs" style={{ color: '#777' }}>
+                {c.count}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ══ BESTSELLERS ════════════════════════════════════ */}
+      <section
+        className="py-24 border-y"
+        style={{ borderColor: '#E8E0D4', background: '#fff' }}
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            {...sectionFade()}
+            className="flex items-end justify-between mb-12 flex-wrap gap-4"
+          >
+            <div>
+              <p
+                className="text-xs font-bold tracking-[0.2em] uppercase mb-2"
+                style={{ color: '#C9A227' }}
+              >
+                Most Loved
+              </p>
+              <h2
+                className="text-5xl font-black"
+                style={{
+                  fontFamily: 'Playfair Display,serif',
+                  color: '#242424',
+                }}
+              >
+                Readers' Favorites
+              </h2>
+            </div>
+            <Link
+              to="/browsebookspage"
+              className="flex items-center gap-2 text-sm font-semibold hover:underline cursor-pointer"
+              style={{ color: '#6B2737' }}
+            >
+              View All Bestsellers <FaArrowRight size={12} />
+            </Link>
+          </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {bestsellers.map((book, i) => (
+              <BookCard key={i} book={book} i={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══ NEW ARRIVALS ═══════════════════════════════════ */}
       <section className="py-24 max-w-7xl mx-auto px-6">
         <motion.div
-          {...fade()}
+          {...sectionFade()}
           className="flex items-end justify-between mb-12 flex-wrap gap-4"
         >
           <div>
-            <span className="inline-flex items-center gap-2 text-xs text-violet-400/80 font-semibold tracking-widest uppercase mb-3 bg-violet-500/10 border border-violet-500/20 px-4 py-1.5 rounded-full">
-              <MdAutoAwesome size={12} /> Handpicked
-            </span>
-            <h2 className="text-5xl font-black text-white">
-              Featured{' '}
-              <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
-                Books
-              </span>
+            <p
+              className="text-xs font-bold tracking-[0.2em] uppercase mb-2"
+              style={{ color: '#C9A227' }}
+            >
+              Just In
+            </p>
+            <h2
+              className="text-5xl font-black"
+              style={{ fontFamily: 'Playfair Display,serif', color: '#242424' }}
+            >
+              Fresh Off the Bookshelf
             </h2>
           </div>
           <Link
             to="/browsebookspage"
-            className="inline-flex items-center gap-2 text-sm text-violet-400/70 hover:text-violet-300 transition-colors cursor-pointer"
+            className="flex items-center gap-2 text-sm font-semibold hover:underline cursor-pointer"
+            style={{ color: '#6B2737' }}
           >
-            See all <FaArrowRight size={11} />
+            See All New Arrivals <FaArrowRight size={12} />
           </Link>
         </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {featured.map((book, i) => (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+          {newArrivals.map((b, i) => (
             <motion.div
               key={i}
-              {...fade(i * 0.08)}
-              whileHover={{ y: -8, transition: { duration: 0.22 } }}
-              className="group relative bg-white/3 border border-white/8 rounded-2xl overflow-hidden hover:border-white/18 transition-all cursor-pointer"
-              style={{ boxShadow: `0 0 0 0 ${book.c}00` }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.boxShadow = `0 8px 40px -8px ${book.c}40`)
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.boxShadow = '0 0 0 0 transparent')
-              }
+              {...sectionFade(i * 0.08)}
+              whileHover={{ y: -5 }}
+              className="group rounded-2xl overflow-hidden border cursor-pointer transition-all hover:shadow-lg"
+              style={{ background: '#fff', borderColor: '#E8E0D4' }}
             >
-              {/* Color bar top */}
               <div
-                className="h-1 w-full"
+                className="h-48 flex items-center justify-center relative"
                 style={{
-                  background: `linear-gradient(90deg,${book.c},${book.c}88)`,
+                  background: 'linear-gradient(135deg,#6B273710,#C9A22710)',
                 }}
-              />
-              <div className="p-6 flex gap-5 items-start">
-                {/* Mini book */}
+              >
                 <div
-                  className="shrink-0 w-16 h-22 rounded-lg flex items-center justify-center shadow-lg"
+                  className="w-16 h-24 rounded-md shadow-lg flex items-center justify-center"
                   style={{
-                    background: `linear-gradient(145deg,${book.c},${book.c}88)`,
-                    minHeight: 88,
+                    background: 'linear-gradient(145deg,#6B2737,#3d151f)',
                   }}
                 >
-                  <FaBookOpen className="text-white/70" size={20} />
+                  <FaBookOpen
+                    size={18}
+                    style={{ color: '#C9A227', opacity: 0.8 }}
+                  />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <span
-                    className="text-xs font-semibold px-2.5 py-1 rounded-full mb-2 inline-block"
-                    style={{
-                      background: `${book.c}20`,
-                      color: book.c,
-                      border: `1px solid ${book.c}35`,
-                    }}
-                  >
-                    {book.genre}
-                  </span>
-                  <h3 className="font-bold text-white text-base leading-snug truncate">
-                    {book.title}
-                  </h3>
-                  <p className="text-sm text-white/40 mt-1">{book.author}</p>
-                  <div className="flex items-center gap-1.5 mt-2">
-                    <div className="flex gap-0.5">
-                      {[...Array(5)].map((_, j) => (
-                        <FaStar
-                          key={j}
-                          size={10}
-                          className={
-                            j < Math.floor(book.rating)
-                              ? 'text-amber-400'
-                              : 'text-white/15'
-                          }
-                        />
-                      ))}
-                    </div>
-                    <span className="text-xs font-bold text-white/60">
-                      {book.rating}
-                    </span>
-                  </div>
-                  <button
-                    className="mt-3 w-full py-2 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer"
-                    style={{
-                      background: `${book.c}18`,
-                      color: book.c,
-                      border: `1px solid ${book.c}35`,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = book.c;
-                      e.currentTarget.style.color = '#fff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = `${book.c}18`;
-                      e.currentTarget.style.color = book.c;
-                    }}
-                  >
-                    + Add to Shelf
-                  </button>
-                </div>
+                <span
+                  className="absolute top-3 left-3 text-xs font-bold px-2 py-0.5 rounded-full text-white"
+                  style={{ background: '#C9A227' }}
+                >
+                  New
+                </span>
+              </div>
+              <div className="p-4">
+                <h3
+                  className="font-bold text-sm leading-snug"
+                  style={{
+                    color: '#242424',
+                    fontFamily: 'Playfair Display,serif',
+                  }}
+                >
+                  {b.title}
+                </h3>
+                <p className="text-xs mt-1" style={{ color: '#777' }}>
+                  {b.author}
+                </p>
               </div>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* ══ GENRE EXPLORER ══════════════════════════════════ */}
-      <section className="py-24 border-y border-violet-500/10 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-950/25 via-[#070512] to-indigo-950/20" />
-        <div className="relative max-w-7xl mx-auto px-6">
-          <motion.div {...fade()} className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 text-xs text-emerald-400/80 font-semibold tracking-widest uppercase mb-3 bg-emerald-500/10 border border-emerald-500/20 px-4 py-1.5 rounded-full">
-              <FaGlobeAmericas size={11} /> Explore
-            </span>
-            <h2 className="text-5xl font-black text-white mt-2">
-              Browse by{' '}
-              <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                Genre
-              </span>
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3">
-            {genres.map((g, i) => (
-              <motion.div
-                key={i}
-                {...fade(i * 0.05)}
-                whileHover={{ y: -6, scale: 1.05 }}
-                className="group flex flex-col items-center justify-center gap-2.5 py-7 px-3 rounded-2xl border border-white/8 bg-white/3 cursor-pointer transition-all"
-                style={{}}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = `${g.color}50`;
-                  e.currentTarget.style.background = `${g.color}12`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
-                }}
-              >
-                <span className="text-2xl group-hover:scale-110 transition-transform">
-                  {g.emoji}
-                </span>
-                <p className="font-semibold text-white/55 text-xs group-hover:text-white transition-colors">
-                  {g.name}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+      {/* ══ PROMO BANNER ═══════════════════════════════════ */}
+      <section
+        className="py-24 relative overflow-hidden"
+        style={{ background: '#6B2737' }}
+      >
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle,#C9A227 1px,transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
+        <div
+          className="absolute -top-20 -right-20 rounded-full blur-3xl"
+          style={{
+            width: 400,
+            height: 400,
+            background: 'rgba(201,162,39,0.15)',
+          }}
+        />
+        <motion.div
+          {...sectionFade()}
+          className="relative z-10 max-w-3xl mx-auto text-center px-6"
+        >
+          <p
+            className="text-xs font-bold tracking-[0.2em] uppercase mb-4"
+            style={{ color: '#C9A227' }}
+          >
+            Special Collection
+          </p>
+          <h2
+            className="text-5xl font-black mb-4 leading-tight"
+            style={{ fontFamily: 'Playfair Display,serif', color: '#F8F5EF' }}
+          >
+            Make Room for Your Next Favorite Book.
+          </h2>
+          <p
+            className="text-lg mb-8"
+            style={{ color: 'rgba(248,245,239,0.7)' }}
+          >
+            Explore remarkable stories, discover new perspectives, and find
+            books worth keeping.
+          </p>
+          <Link
+            to="/browsebookspage"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-sm transition-all hover:-translate-y-0.5 cursor-pointer shadow-xl"
+            style={{ background: '#C9A227', color: '#242424' }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = '#b8911f')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = '#C9A227')}
+          >
+            Browse the Collection <FaArrowRight size={13} />
+          </Link>
+        </motion.div>
       </section>
 
-      {/* ══ FEATURES GRID ═══════════════════════════════════ */}
+      {/* ══ FEATURED AUTHORS ═══════════════════════════════ */}
       <section className="py-24 max-w-7xl mx-auto px-6">
-        <motion.div {...fade()} className="text-center mb-14">
-          <span className="inline-flex items-center gap-2 text-xs text-amber-400/80 font-semibold tracking-widest uppercase mb-3 bg-amber-500/10 border border-amber-500/20 px-4 py-1.5 rounded-full">
-            <FaMagic size={11} /> Everything You Need
-          </span>
-          <h2 className="text-5xl font-black text-white mt-2">
-            Why{' '}
-            <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-              BookWorm
-            </span>
-            ?
-          </h2>
-          <p className="text-white/35 mt-3 text-sm max-w-md mx-auto">
-            Built for readers who take their reading seriously
+        <motion.div {...sectionFade()} className="text-center mb-14">
+          <p
+            className="text-xs font-bold tracking-[0.2em] uppercase mb-3"
+            style={{ color: '#C9A227' }}
+          >
+            Authors
           </p>
+          <h2
+            className="text-5xl font-black mb-3"
+            style={{ fontFamily: 'Playfair Display,serif', color: '#242424' }}
+          >
+            Meet the Minds Behind the Pages
+          </h2>
         </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {features.map((f, i) => (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+          {authors.map((a, i) => (
             <motion.div
               key={i}
-              {...fade(i * 0.08)}
-              whileHover={{ y: -5, scale: 1.01 }}
-              className="group p-6 rounded-2xl border border-white/8 bg-white/3 hover:bg-white/5 transition-all cursor-default"
+              {...sectionFade(i * 0.1)}
+              whileHover={{ y: -5 }}
+              className="group flex flex-col items-center text-center p-6 rounded-2xl border cursor-pointer transition-all"
+              style={{ background: '#fff', borderColor: '#E8E0D4' }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = `${f.color}40`;
+                e.currentTarget.style.borderColor = '#C9A227';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 24px rgba(201,162,39,0.12)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                e.currentTarget.style.borderColor = '#E8E0D4';
+                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div
-                className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 transition-all group-hover:scale-110"
+                className="w-16 h-16 rounded-full mb-4 flex items-center justify-center font-black text-2xl transition-all group-hover:scale-110"
                 style={{
-                  background: `${f.color}18`,
-                  color: f.color,
-                  border: `1px solid ${f.color}30`,
+                  background: 'linear-gradient(135deg,#6B2737,#C9A227)',
+                  color: '#F8F5EF',
+                  fontFamily: 'Playfair Display,serif',
                 }}
               >
-                {f.icon}
+                {a.initial}
               </div>
-              <h3 className="font-bold text-white text-base mb-2">{f.title}</h3>
-              <p className="text-sm text-white/40 leading-relaxed">{f.desc}</p>
+              <p
+                className="font-bold text-sm mb-1"
+                style={{
+                  color: '#242424',
+                  fontFamily: 'Playfair Display,serif',
+                }}
+              >
+                {a.name}
+              </p>
+              <p className="text-xs mb-3" style={{ color: '#777' }}>
+                {a.genre}
+              </p>
+              <span
+                className="text-xs font-semibold hover:underline cursor-pointer"
+                style={{ color: '#6B2737' }}
+              >
+                Explore Books →
+              </span>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* ══ TESTIMONIALS ════════════════════════════════════ */}
-      <section className="py-24 border-y border-violet-500/10 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-950/30 via-[#070512] to-violet-950/25" />
-        <div className="relative max-w-7xl mx-auto px-6">
-          <motion.div {...fade()} className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 text-xs text-rose-400/80 font-semibold tracking-widest uppercase mb-3 bg-rose-500/10 border border-rose-500/20 px-4 py-1.5 rounded-full">
-              ❤️ Community
-            </span>
-            <h2 className="text-5xl font-black text-white mt-2">
-              Loved by{' '}
-              <span className="bg-gradient-to-r from-rose-400 to-pink-400 bg-clip-text text-transparent">
-                Readers
-              </span>
+      {/* ══ WHY US ═════════════════════════════════════════ */}
+      <section
+        className="py-24 border-y"
+        style={{ borderColor: '#E8E0D4', background: '#fff' }}
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div {...sectionFade()} className="text-center mb-14">
+            <p
+              className="text-xs font-bold tracking-[0.2em] uppercase mb-3"
+              style={{ color: '#C9A227' }}
+            >
+              Why Choose Us
+            </p>
+            <h2
+              className="text-5xl font-black"
+              style={{ fontFamily: 'Playfair Display,serif', color: '#242424' }}
+            >
+              Why Readers Choose Us
             </h2>
           </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((t, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {whyUs.map((w, i) => (
               <motion.div
                 key={i}
-                {...fade(i * 0.12)}
-                whileHover={{ y: -6 }}
-                className="group p-7 rounded-2xl border border-white/8 bg-white/3 hover:bg-white/6 hover:border-violet-500/25 transition-all cursor-default"
+                {...sectionFade(i * 0.1)}
+                whileHover={{ y: -4 }}
+                className="group p-6 rounded-2xl border transition-all cursor-default"
+                style={{ background: '#F8F5EF', borderColor: '#E8E0D4' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#C9A227';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#E8E0D4';
+                }}
               >
-                {/* Stars */}
-                <div className="flex gap-1 mb-4">
-                  {Array(t.rating)
-                    .fill(0)
-                    .map((_, j) => (
-                      <FaStar key={j} className="text-amber-400" size={12} />
-                    ))}
+                <div
+                  className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-all group-hover:scale-110"
+                  style={{
+                    background: 'rgba(107,39,55,0.08)',
+                    color: '#6B2737',
+                    border: '1px solid rgba(107,39,55,0.14)',
+                  }}
+                >
+                  {w.icon}
                 </div>
-                <FaQuoteLeft className="text-violet-400/25 mb-3" size={20} />
-                <p className="text-white/55 leading-relaxed text-sm mb-6">
-                  "{t.text}"
+                <h3
+                  className="font-bold text-base mb-2"
+                  style={{
+                    color: '#242424',
+                    fontFamily: 'Playfair Display,serif',
+                  }}
+                >
+                  {w.title}
+                </h3>
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: '#777' }}
+                >
+                  {w.desc}
                 </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500/40 to-indigo-500/40 border border-violet-500/25 flex items-center justify-center font-black text-violet-300">
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <p className="font-bold text-white/85 text-sm">{t.name}</p>
-                    <p className="text-xs text-white/30">{t.role}</p>
-                  </div>
-                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══ CTA / NEWSLETTER ════════════════════════════════ */}
-      <section className="py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-900/20 via-[#070512] to-indigo-900/20" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-violet-600/10 blur-[120px] pointer-events-none" />
-
-        <motion.div
-          {...fade()}
-          className="relative z-10 max-w-2xl mx-auto text-center px-6"
-        >
-          <div className="inline-flex items-center gap-2 text-xs text-violet-300/70 font-semibold tracking-widest uppercase mb-6 border border-violet-500/25 px-4 py-2 rounded-full bg-violet-500/8">
-            <HiSparkles size={12} /> Join 5,000+ Readers
-          </div>
-          <h2 className="text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
-            Start Your Reading
-            <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-indigo-400 bg-clip-text text-transparent">
-              {' '}
-              Adventure
-            </span>
+      {/* ══ TESTIMONIALS ═══════════════════════════════════ */}
+      <section className="py-24 max-w-7xl mx-auto px-6">
+        <motion.div {...sectionFade()} className="text-center mb-14">
+          <p
+            className="text-xs font-bold tracking-[0.2em] uppercase mb-3"
+            style={{ color: '#C9A227' }}
+          >
+            Reviews
+          </p>
+          <h2
+            className="text-5xl font-black"
+            style={{ fontFamily: 'Playfair Display,serif', color: '#242424' }}
+          >
+            Words from Our Readers
           </h2>
-          <p className="text-white/40 mb-10 leading-relaxed">
-            Get weekly picks, new arrivals, and personalised recommendations.
-            Completely free, no spam ever.
+        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {testimonials.map((t, i) => (
+            <motion.div
+              key={i}
+              {...sectionFade(i * 0.1)}
+              whileHover={{ y: -5 }}
+              className="p-7 rounded-2xl border transition-all cursor-default"
+              style={{ background: '#fff', borderColor: '#E8E0D4' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#C9A227';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 24px rgba(201,162,39,0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = '#E8E0D4';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            >
+              <div className="flex gap-0.5 mb-4">
+                {Array(t.rating)
+                  .fill(0)
+                  .map((_, j) => (
+                    <FaStar key={j} size={13} style={{ color: '#C9A227' }} />
+                  ))}
+              </div>
+              <FaQuoteLeft
+                size={20}
+                style={{ color: 'rgba(107,39,55,0.2)', marginBottom: 12 }}
+              />
+              <p
+                className="text-sm leading-relaxed mb-6"
+                style={{ color: '#555' }}
+              >
+                "{t.text}"
+              </p>
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm"
+                  style={{
+                    background: 'linear-gradient(135deg,#6B2737,#C9A227)',
+                    color: '#F8F5EF',
+                  }}
+                >
+                  {t.name[0]}
+                </div>
+                <div>
+                  <p
+                    className="font-bold text-sm"
+                    style={{
+                      color: '#242424',
+                      fontFamily: 'Playfair Display,serif',
+                    }}
+                  >
+                    {t.name}
+                  </p>
+                  <p className="text-xs" style={{ color: '#777' }}>
+                    {t.role}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ══ NEWSLETTER ═════════════════════════════════════ */}
+      <section
+        className="py-24 border-y"
+        style={{ borderColor: '#E8E0D4', background: '#F8F5EF' }}
+      >
+        <motion.div
+          {...sectionFade()}
+          className="max-w-xl mx-auto text-center px-6"
+        >
+          <p
+            className="text-xs font-bold tracking-[0.2em] uppercase mb-3"
+            style={{ color: '#C9A227' }}
+          >
+            Newsletter
+          </p>
+          <h2
+            className="text-5xl font-black mb-4"
+            style={{ fontFamily: 'Playfair Display,serif', color: '#242424' }}
+          >
+            A Little More Reading in Your Inbox.
+          </h2>
+          <p className="text-base mb-8" style={{ color: '#777' }}>
+            Get updates on new arrivals, reading recommendations, and bookstore
+            news.
           </p>
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+            className="flex flex-col sm:flex-row gap-3"
           >
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
-              className="flex-1 px-5 py-4 rounded-2xl bg-violet-500/8 border border-violet-500/20 text-white placeholder-white/25 focus:outline-none focus:border-violet-400/50 focus:bg-violet-500/12 transition-all text-sm"
+              className="flex-1 px-5 py-4 rounded-2xl text-sm outline-none transition-all"
+              style={{
+                background: '#fff',
+                border: '1px solid #E8E0D4',
+                color: '#242424',
+              }}
+              onFocus={(e) => (e.target.style.borderColor = '#6B2737')}
+              onBlur={(e) => (e.target.style.borderColor = '#E8E0D4')}
             />
             <button
               type="submit"
-              className="px-7 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-bold hover:from-violet-500 hover:to-indigo-500 hover:-translate-y-0.5 active:translate-y-0 transition-all shadow-xl shadow-violet-500/25 cursor-pointer text-sm whitespace-nowrap"
+              className="px-7 py-4 rounded-2xl font-bold text-sm transition-all hover:-translate-y-0.5 cursor-pointer"
+              style={{ background: '#6B2737', color: '#F8F5EF' }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = '#4d1c28')
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.background = '#6B2737')
+              }
             >
-              Subscribe Free
+              Subscribe
             </button>
           </form>
-          <div className="flex items-center justify-center gap-5 mt-6 flex-wrap">
-            {['No spam', 'Unsubscribe anytime', 'Free forever'].map((t, i) => (
-              <span
-                key={i}
-                className="flex items-center gap-1.5 text-xs text-white/30"
-              >
-                <FaCheckCircle className="text-emerald-400/60" size={11} /> {t}
-              </span>
-            ))}
-          </div>
+          <p className="text-xs mt-4" style={{ color: '#aaa' }}>
+            No spam, ever. Unsubscribe at any time.
+          </p>
         </motion.div>
       </section>
 
-      {/* ══ FOOTER ══════════════════════════════════════════ */}
-      <footer className="border-t border-violet-500/10 py-12 bg-gradient-to-b from-transparent to-violet-950/10">
+      {/* ══ FOOTER ═════════════════════════════════════════ */}
+      <footer
+        className="pt-16 pb-8"
+        style={{ background: '#242424', color: '#F8F5EF' }}
+      >
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-violet-500/15 border border-violet-500/25 flex items-center justify-center">
-                <FaBookOpen className="text-violet-400" size={14} />
-              </div>
-              <span className="text-white font-black text-lg">
-                Book<span className="text-violet-400">Worm</span>
-              </span>
-            </div>
-            <p className="text-white/20 text-xs">
-              © 2025 BookWorm. All rights reserved.
-            </p>
-            <div className="flex gap-6">
-              {['Home', 'Browse', 'Library', 'Privacy'].map((l, i) => (
-                <span
-                  key={i}
-                  className="text-xs text-white/25 hover:text-violet-400/70 transition-colors cursor-pointer"
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b"
+            style={{ borderColor: 'rgba(248,245,239,0.1)' }}
+          >
+            {/* Brand */}
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center"
+                  style={{
+                    background: 'rgba(201,162,39,0.15)',
+                    border: '1px solid rgba(201,162,39,0.3)',
+                  }}
                 >
-                  {l}
+                  <FaBookOpen size={16} style={{ color: '#C9A227' }} />
+                </div>
+                <span
+                  className="font-black text-lg"
+                  style={{ fontFamily: 'Playfair Display,serif' }}
+                >
+                  The Reading Room
                 </span>
-              ))}
+              </div>
+              <p
+                className="text-sm leading-relaxed mb-5"
+                style={{ color: 'rgba(248,245,239,0.45)' }}
+              >
+                A carefully curated bookstore for readers who believe the right
+                book can change everything.
+              </p>
+              <div className="flex gap-3">
+                {[FaInstagram, FaTwitter, FaFacebook].map((Icon, i) => (
+                  <div
+                    key={i}
+                    className="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer transition-all hover:scale-110"
+                    style={{
+                      background: 'rgba(248,245,239,0.08)',
+                      border: '1px solid rgba(248,245,239,0.12)',
+                    }}
+                  >
+                    <Icon
+                      size={14}
+                      style={{ color: 'rgba(248,245,239,0.5)' }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
+            {/* Explore */}
+            <div>
+              <p
+                className="font-bold text-sm mb-5 tracking-wide uppercase"
+                style={{ color: '#C9A227' }}
+              >
+                Explore
+              </p>
+              {['All Books', 'Categories', 'Bestsellers', 'New Arrivals'].map(
+                (l, i) => (
+                  <p
+                    key={i}
+                    className="text-sm mb-3 cursor-pointer hover:text-white transition-colors"
+                    style={{ color: 'rgba(248,245,239,0.45)' }}
+                  >
+                    {l}
+                  </p>
+                )
+              )}
+            </div>
+            {/* Customer Service */}
+            <div>
+              <p
+                className="font-bold text-sm mb-5 tracking-wide uppercase"
+                style={{ color: '#C9A227' }}
+              >
+                Customer Service
+              </p>
+              {['Contact Us', 'FAQs', 'Shipping Info', 'Returns & Refunds'].map(
+                (l, i) => (
+                  <p
+                    key={i}
+                    className="text-sm mb-3 cursor-pointer hover:text-white transition-colors"
+                    style={{ color: 'rgba(248,245,239,0.45)' }}
+                  >
+                    {l}
+                  </p>
+                )
+              )}
+            </div>
+            {/* Policies */}
+            <div>
+              <p
+                className="font-bold text-sm mb-5 tracking-wide uppercase"
+                style={{ color: '#C9A227' }}
+              >
+                Policies
+              </p>
+              {['Privacy Policy', 'Terms & Conditions', 'Cookie Policy'].map(
+                (l, i) => (
+                  <p
+                    key={i}
+                    className="text-sm mb-3 cursor-pointer hover:text-white transition-colors"
+                    style={{ color: 'rgba(248,245,239,0.45)' }}
+                  >
+                    {l}
+                  </p>
+                )
+              )}
+            </div>
+          </div>
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-xs" style={{ color: 'rgba(248,245,239,0.3)' }}>
+              © 2025 The Reading Room. All rights reserved.
+            </p>
+            <p className="text-xs" style={{ color: 'rgba(248,245,239,0.2)' }}>
+              Built with ❤️ for readers everywhere
+            </p>
           </div>
         </div>
       </footer>
