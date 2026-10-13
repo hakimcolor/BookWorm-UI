@@ -505,7 +505,7 @@ const HOme = () => {
       {/* ══ STATS STRIP ═════════════════════════════════════ */}
       <section className="py-14 relative border-y border-violet-500/10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-violet-950/40 via-indigo-950/30 to-violet-950/40" />
-        <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-5">
           {stats.map((s, i) => (
             <motion.div
               key={i}
