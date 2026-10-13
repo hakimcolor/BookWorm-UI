@@ -362,7 +362,7 @@ const HOme = () => {
 
         <motion.div
           style={{ opacity: heroOpacity }}
-          className="relative z-20 max-w-7xl mx-auto px-6 w-full pt-24 pb-16 grid lg:grid-cols-2 gap-16 items-center"
+          className="relative z-20 max-w-7xl mx-auto px-6 w-full pt-24 pb-16 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
         >
           {/* Left */}
           <div>
