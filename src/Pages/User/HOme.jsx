@@ -445,7 +445,17 @@ const HOme = () => {
             >
               Discover Stories
               <br />
-              <span style={{ color: C.primary }}>That Stay</span>
+              <span
+                style={{
+                  color: C.primary,
+                  textDecorationLine: 'underline',
+                  textDecorationColor: C.gold,
+                  textDecorationThickness: '3px',
+                  textUnderlineOffset: '6px',
+                }}
+              >
+                That Stay
+              </span>
               <br />
               With You.
             </motion.h1>
