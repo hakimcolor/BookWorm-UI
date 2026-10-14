@@ -801,14 +801,14 @@ const HOme = () => {
       {/* ══ PROMO BANNER ════════════════════════════════════ */}
       <section
         className="py-0 relative overflow-hidden"
-        style={{ background: C.primary }}
+        style={{ background: C.primary, minHeight: 360 }}
       >
         {/* Background image */}
         <div className="absolute inset-0">
           <img
             src={BookImg}
             alt=""
-            className="w-full h-full object-cover opacity-15"
+            className="w-full h-full object-cover opacity-20"
           />
           <div
             className="absolute inset-0"
