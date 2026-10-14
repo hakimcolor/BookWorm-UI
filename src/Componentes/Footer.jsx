@@ -213,6 +213,12 @@ export default function Footer() {
           <p className="text-xs" style={{ color: 'rgba(248,245,239,0.3)' }}>
             © {year} BookWorm. All rights reserved.
           </p>
+          <p
+            className="text-xs hidden sm:block"
+            style={{ color: 'rgba(248,245,239,0.18)' }}
+          >
+            Built with ❤️ for readers everywhere
+          </p>
           <div className="flex gap-6">
             {['Accessibility', 'Sitemap', 'Cookies'].map((l, i) => (
               <a
