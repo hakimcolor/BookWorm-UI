@@ -81,19 +81,36 @@ const Navbar = () => {
       <header
         ref={navRef}
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-black/90 backdrop-blur-xl shadow-lg shadow-black/30 border-b border-white/8'
-            : 'bg-black/60 backdrop-blur-md'
+          scrolled ? 'shadow-lg border-b' : ''
         }`}
+        style={{
+          background: scrolled
+            ? 'rgba(248,245,239,0.97)'
+            : 'rgba(248,245,239,0.85)',
+          backdropFilter: 'blur(16px)',
+          borderColor: scrolled ? '#E8E0D4' : 'transparent',
+        }}
       >
         <nav className="max-w-7xl mx-auto h-16 px-6 flex items-center justify-between">
           {/* Logo */}
-          <NavLink to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-violet-500/15 border border-violet-500/30 flex items-center justify-center group-hover:bg-violet-500/25 transition-all">
-              <FaBookOpen size={15} className="text-violet-300" />
+          <NavLink to="/" className="flex items-center gap-2.5 group">
+            <div
+              className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:scale-105 transition-all"
+              style={{
+                background: 'rgba(107,39,55,0.1)',
+                border: '1px solid rgba(107,39,55,0.2)',
+              }}
+            >
+              <FaBookOpen size={15} style={{ color: '#6B2737' }} />
             </div>
-            <span className="text-xl font-extrabold text-white tracking-tight group-hover:text-white/80 transition-colors">
-              Book<span className="text-white/50">Worm</span>
+            <span
+              className="text-xl font-black tracking-tight group-hover:opacity-80 transition-opacity"
+              style={{
+                fontFamily: 'Playfair Display, serif',
+                color: '#242424',
+              }}
+            >
+              Book<span style={{ color: '#6B2737' }}>Worm</span>
             </span>
           </NavLink>
 
@@ -104,17 +121,26 @@ const Navbar = () => {
                 {({ isActive }) => (
                   <motion.span
                     whileHover={{ y: -1 }}
-                    className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? 'text-white bg-violet-500/15'
-                        : 'text-violet-200/55 hover:text-white hover:bg-violet-500/10'
-                    }`}
+                    className="relative px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer"
+                    style={{
+                      color: isActive ? '#6B2737' : '#555',
+                      background: isActive
+                        ? 'rgba(107,39,55,0.08)'
+                        : 'transparent',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) e.currentTarget.style.color = '#6B2737';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) e.currentTarget.style.color = '#555';
+                    }}
                   >
                     {item.label}
                     {isActive && (
                       <motion.span
                         layoutId="navUnderline"
-                        className="absolute bottom-1 left-3 right-3 h-px bg-violet-400/70 rounded"
+                        className="absolute bottom-1 left-3 right-3 h-px rounded"
+                        style={{ background: '#C9A227' }}
                       />
                     )}
                   </motion.span>
@@ -132,20 +158,37 @@ const Navbar = () => {
                     user.photoURL || 'https://i.ibb.co/2N2r2B6/default-user.png'
                   }
                   alt="Profile"
-                  className="w-8 h-8 rounded-full object-cover border border-white/25"
+                  className="w-8 h-8 rounded-full object-cover"
+                  style={{ border: '2px solid #C9A227' }}
                   onError={(e) =>
                     (e.currentTarget.src =
                       'https://i.ibb.co/2N2r2B6/default-user.png')
                   }
                 />
-                <span className="text-sm text-white/50 max-w-[110px] truncate">
+                <span
+                  className="text-sm max-w-[110px] truncate"
+                  style={{ color: '#777' }}
+                >
                   {user.displayName || user.email}
                 </span>
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={handleLogout}
-                  className="px-4 py-1.5 rounded-lg text-sm font-semibold bg-violet-500/8 border border-violet-500/20 text-violet-200/70 hover:bg-violet-500/20 hover:text-white transition-all cursor-pointer"
+                  className="px-4 py-1.5 rounded-lg text-sm font-semibold transition-all cursor-pointer"
+                  style={{
+                    background: 'rgba(107,39,55,0.08)',
+                    border: '1px solid rgba(107,39,55,0.2)',
+                    color: '#6B2737',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#6B2737';
+                    e.currentTarget.style.color = '#F8F5EF';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(107,39,55,0.08)';
+                    e.currentTarget.style.color = '#6B2737';
+                  }}
                 >
                   Logout
                 </motion.button>
@@ -153,9 +196,20 @@ const Navbar = () => {
             ) : (
               <NavLink to="/signup">
                 <motion.button
-                  whileHover={{ scale: 1.03 }}
+                  whileHover={{ scale: 1.03, y: -1 }}
                   whileTap={{ scale: 0.97 }}
-                  className="px-5 py-2 rounded-lg text-sm font-bold bg-white text-black hover:bg-white/90 transition-all shadow-lg shadow-white/10 cursor-pointer"
+                  className="px-5 py-2 rounded-lg text-sm font-bold transition-all cursor-pointer shadow-lg"
+                  style={{
+                    background: '#6B2737',
+                    color: '#F8F5EF',
+                    boxShadow: '0 4px 14px rgba(107,39,55,0.25)',
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background = '#4d1c28')
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background = '#6B2737')
+                  }
                 >
                   Get Started
                 </motion.button>
@@ -166,7 +220,8 @@ const Navbar = () => {
           {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden text-white/70 hover:text-white transition-colors cursor-pointer p-1"
+            className="md:hidden transition-colors cursor-pointer p-1"
+            style={{ color: '#6B2737' }}
           >
             {open ? <FiX size={22} /> : <FiMenu size={22} />}
           </button>
@@ -180,7 +235,12 @@ const Navbar = () => {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden bg-black/95 backdrop-blur-xl border-t border-white/8"
+              className="md:hidden border-t"
+              style={{
+                background: 'rgba(248,245,239,0.98)',
+                backdropFilter: 'blur(16px)',
+                borderColor: '#E8E0D4',
+              }}
             >
               <div className="flex flex-col gap-1 px-5 py-5">
                 {items.map((item, i) => (
@@ -188,38 +248,57 @@ const Navbar = () => {
                     key={i}
                     to={item.to}
                     onClick={() => setOpen(false)}
-                    className={({ isActive }) =>
-                      `px-4 py-3 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                        isActive
-                          ? 'bg-white/10 text-white'
-                          : 'text-white/55 hover:bg-white/8 hover:text-white'
-                      }`
-                    }
+                    className="px-4 py-3 rounded-lg text-sm font-semibold transition-all cursor-pointer"
+                    style={({ isActive }) => ({
+                      color: isActive ? '#6B2737' : '#555',
+                      background: isActive
+                        ? 'rgba(107,39,55,0.08)'
+                        : 'transparent',
+                    })}
                   >
                     {item.label}
                   </NavLink>
                 ))}
 
                 {user ? (
-                  <div className="flex items-center gap-3 px-4 pt-4 border-t border-white/10 mt-2">
+                  <div
+                    className="flex items-center gap-3 px-4 pt-4 mt-2 border-t"
+                    style={{ borderColor: '#E8E0D4' }}
+                  >
                     <img
                       src={
                         user.photoURL ||
                         'https://i.ibb.co/2N2r2B6/default-user.png'
                       }
                       alt="Profile"
-                      className="w-9 h-9 rounded-full object-cover border border-white/25"
+                      className="w-9 h-9 rounded-full object-cover"
+                      style={{ border: '2px solid #C9A227' }}
                       onError={(e) =>
                         (e.currentTarget.src =
                           'https://i.ibb.co/2N2r2B6/default-user.png')
                       }
                     />
-                    <span className="text-sm text-white/50 truncate flex-1">
+                    <span
+                      className="text-sm truncate flex-1"
+                      style={{ color: '#777' }}
+                    >
                       {user.displayName || user.email}
                     </span>
                     <button
                       onClick={handleLogout}
-                      className="text-sm text-white/60 hover:text-white border border-white/15 px-3 py-1.5 rounded-lg hover:bg-white/10 transition-all cursor-pointer"
+                      className="text-sm px-3 py-1.5 rounded-lg transition-all cursor-pointer"
+                      style={{
+                        color: '#6B2737',
+                        border: '1px solid rgba(107,39,55,0.25)',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#6B2737';
+                        e.currentTarget.style.color = '#F8F5EF';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.color = '#6B2737';
+                      }}
                     >
                       Logout
                     </button>
@@ -228,7 +307,8 @@ const Navbar = () => {
                   <NavLink
                     to="/signup"
                     onClick={() => setOpen(false)}
-                    className="mt-3 mx-4 py-2.5 rounded-lg bg-white text-black text-sm font-bold text-center hover:bg-white/90 transition-all cursor-pointer"
+                    className="mt-3 mx-4 py-2.5 rounded-lg text-sm font-bold text-center transition-all cursor-pointer block"
+                    style={{ background: '#6B2737', color: '#F8F5EF' }}
                   >
                     Get Started
                   </NavLink>
@@ -238,7 +318,7 @@ const Navbar = () => {
           )}
         </AnimatePresence>
       </header>
-      <ToastContainer theme="dark" />
+      <ToastContainer />
     </>
   );
 };
