@@ -60,11 +60,11 @@ const Navbar = () => {
       text: 'Are you sure you want to sign out?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#111',
-      cancelButtonColor: '#555',
+      confirmButtonColor: '#6B2737',
+      cancelButtonColor: '#777',
       confirmButtonText: 'Yes, logout',
-      background: '#1a1a1a',
-      color: '#fff',
+      background: '#F8F5EF',
+      color: '#242424',
     });
     if (result.isConfirmed) {
       await signoutUser();
