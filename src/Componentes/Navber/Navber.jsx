@@ -166,7 +166,7 @@ const Navbar = () => {
                   }
                 />
                 <span
-                  className="text-sm max-w-[110px] truncate"
+                  className="text-sm max-w-27.5 truncate"
                   style={{ color: '#777' }}
                 >
                   {user.displayName || user.email}
