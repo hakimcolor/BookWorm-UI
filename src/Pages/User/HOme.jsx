@@ -168,12 +168,12 @@ const benefits = [
 ];
 
 const categories = [
-  { name: 'Fiction & Literature', emoji: '📖' },
-  { name: 'Business & Finance', emoji: '💼' },
-  { name: 'Personal Development', emoji: '🌱' },
-  { name: 'Science & Technology', emoji: '🔬' },
-  { name: 'History & Biography', emoji: '🏛️' },
-  { name: "Children's Books", emoji: '🎨' },
+  { name: 'Fiction & Literature', emoji: '📖', count: '2,400+ books' },
+  { name: 'Business & Finance', emoji: '💼', count: '980+ books' },
+  { name: 'Personal Development', emoji: '🌱', count: '1,200+ books' },
+  { name: 'Science & Technology', emoji: '🔬', count: '1,500+ books' },
+  { name: 'History & Biography', emoji: '🏛️', count: '760+ books' },
+  { name: "Children's Books", emoji: '🎨', count: '890+ books' },
 ];
 
 const whyUs = [
@@ -706,6 +706,9 @@ const HOme = () => {
                 style={{ color: C.text }}
               >
                 {c.name}
+              </p>
+              <p className="text-xs" style={{ color: C.muted }}>
+                {c.count}
               </p>
             </motion.div>
           ))}
