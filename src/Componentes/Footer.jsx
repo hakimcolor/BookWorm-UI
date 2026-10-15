@@ -43,7 +43,13 @@ export default function Footer() {
   ];
 
   return (
-    <footer style={{ background: '#242424', color: '#F8F5EF' }}>
+    <footer
+      style={{
+        background:
+          'linear-gradient(135deg,#1A1A2E 0%,#16213E 50%,#0F3460 100%)',
+        color: '#F8F5EF',
+      }}
+    >
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b"
