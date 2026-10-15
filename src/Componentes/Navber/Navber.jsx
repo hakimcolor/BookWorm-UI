@@ -85,10 +85,11 @@ const Navbar = () => {
         }`}
         style={{
           background: scrolled
-            ? 'rgba(248,245,239,0.97)'
-            : 'rgba(248,245,239,0.85)',
-          backdropFilter: 'blur(16px)',
-          borderColor: scrolled ? '#E8E0D4' : 'transparent',
+            ? 'rgba(248,245,239,0.98)'
+            : 'rgba(248,245,239,0.9)',
+          backdropFilter: 'blur(20px)',
+          borderColor: scrolled ? '#C9A22744' : 'transparent',
+          boxShadow: scrolled ? '0 4px 24px rgba(107,39,55,0.08)' : 'none',
         }}
       >
         <nav className="max-w-7xl mx-auto h-16 px-6 flex items-center justify-between">
