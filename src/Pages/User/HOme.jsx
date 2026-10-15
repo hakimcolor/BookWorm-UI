@@ -1492,6 +1492,70 @@ const HOme = () => {
         </div>
       </section>
 
+      {/* ══ GENRE SPOTLIGHT ═══════════════════════════════════ */}
+      <section className="py-24 max-w-7xl mx-auto px-6">
+        <motion.div {...sF()} className="text-center mb-14">
+          <p
+            className="text-xs font-bold tracking-[0.2em] uppercase mb-3"
+            style={{ color: C.orange }}
+          >
+            Spotlight
+          </p>
+          <h2
+            className="text-5xl font-black"
+            style={{ fontFamily: 'Playfair Display,serif', color: C.text }}
+          >
+            Genres We <span style={{ color: C.accent1 }}>Love</span>
+          </h2>
+        </motion.div>
+        <div
+          className="flex gap-4 overflow-x-auto pb-4"
+          style={{ scrollbarWidth: 'thin' }}
+        >
+          {[
+            { label: 'Romance', emoji: '💕', img: IMGS.cozy, color: C.accent1 },
+            {
+              label: 'Mystery',
+              emoji: '🔍',
+              img: IMGS.vintage,
+              color: C.accent2,
+            },
+            { label: 'Fantasy', emoji: '🧙', img: IMGS.hero1, color: C.purple },
+            {
+              label: 'Thriller',
+              emoji: '⚡',
+              img: IMGS.stack,
+              color: C.orange,
+            },
+            { label: 'Biography', emoji: '📜', img: IMGS.open, color: C.teal },
+            { label: 'Science', emoji: '🔬', img: IMGS.reading, color: C.gold },
+          ].map((g, i) => (
+            <motion.div
+              key={i}
+              {...sF(i * 0.07)}
+              whileHover={{ scale: 1.04 }}
+              className="relative flex-shrink-0 w-48 h-64 rounded-3xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-shadow"
+            >
+              <img
+                src={g.img}
+                alt={g.label}
+                className="w-full h-full object-cover"
+              />
+              <div
+                className="absolute inset-0 rounded-3xl"
+                style={{
+                  background: `linear-gradient(to top,${g.color}ee,${g.color}44,transparent)`,
+                }}
+              />
+              <div className="absolute bottom-5 left-0 right-0 text-center">
+                <p className="text-2xl mb-1">{g.emoji}</p>
+                <p className="font-black text-white text-base">{g.label}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* ══ FEATURES STRIP ══════════════════════════════════ */}
       <section
         className="py-10 border-y"
