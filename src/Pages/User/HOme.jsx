@@ -176,7 +176,7 @@ const MOCK_TESTIMONIALS = [
     name: 'Sarah Johnson',
     role: 'Book Club Founder',
     rating: 5,
-    text: 'BookWorm completely transformed my reading life. The curation is absolutely spot on and the delivery is always super fast.',
+    text: 'BookWorm completely transformed my reading life. The curation is spot on and delivery is always fast. Highly recommend!',
   },
   {
     name: 'Marcus Chen',
