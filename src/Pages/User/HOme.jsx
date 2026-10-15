@@ -709,7 +709,7 @@ const HOme = () => {
       <section
         className="py-14 border-y"
         style={{
-          background: `linear-gradient(135deg,${C.secondary} 0%,${C.accent2} 100%)`,
+          background: `linear-gradient(135deg,${C.secondary} 0%,${C.accent2} 50%,${C.purple} 100%)`,
           borderColor: 'transparent',
         }}
       >
