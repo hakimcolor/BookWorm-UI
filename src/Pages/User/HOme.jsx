@@ -1046,6 +1046,105 @@ const HOme = () => {
         </div>
       </section>
 
+      {/* ══ TOP AUTHORS ═══════════════════════════════════════ */}
+      <section
+        className="py-24 border-y"
+        style={{ borderColor: C.border, background: C.bg }}
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div {...sF()} className="text-center mb-14">
+            <p
+              className="text-xs font-bold tracking-[0.2em] uppercase mb-3"
+              style={{ color: C.purple }}
+            >
+              Featured Authors
+            </p>
+            <h2
+              className="text-5xl font-black"
+              style={{ fontFamily: 'Playfair Display,serif', color: C.text }}
+            >
+              Meet the Writers
+            </h2>
+          </motion.div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            {[
+              {
+                name: 'Matt Haig',
+                genre: 'Fiction',
+                img: IMGS.author,
+                books: 12,
+              },
+              {
+                name: 'James Clear',
+                genre: 'Self-Help',
+                img: IMGS.author2,
+                books: 5,
+              },
+              {
+                name: 'Paulo Coelho',
+                genre: 'Literary',
+                img: IMGS.author3,
+                books: 30,
+              },
+              {
+                name: 'Yuval Harari',
+                genre: 'History',
+                img: IMGS.author,
+                books: 8,
+              },
+              {
+                name: 'Frank Herbert',
+                genre: 'Sci-Fi',
+                img: IMGS.author2,
+                books: 15,
+              },
+              {
+                name: 'R. Kiyosaki',
+                genre: 'Finance',
+                img: IMGS.author3,
+                books: 20,
+              },
+            ].map((a, i) => (
+              <motion.div
+                key={i}
+                {...sF(i * 0.08)}
+                whileHover={{ y: -6 }}
+                className="flex flex-col items-center gap-3 cursor-pointer group"
+              >
+                <div className="relative">
+                  <img
+                    src={a.img}
+                    alt={a.name}
+                    className="w-20 h-20 rounded-full object-cover shadow-lg group-hover:shadow-xl transition-shadow"
+                    style={{ border: `3px solid ${C.border}` }}
+                  />
+                  <div
+                    className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center shadow"
+                    style={{ background: C.gold }}
+                  >
+                    <FaStar size={9} style={{ color: '#fff' }} />
+                  </div>
+                </div>
+                <div className="text-center">
+                  <p className="font-bold text-sm" style={{ color: C.text }}>
+                    {a.name}
+                  </p>
+                  <p className="text-xs" style={{ color: C.muted }}>
+                    {a.genre}
+                  </p>
+                  <p
+                    className="text-xs font-semibold mt-1"
+                    style={{ color: C.primary }}
+                  >
+                    {a.books} books
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══ PROMO BANNER ════════════════════════════════════ */}
       <section
         className="relative overflow-hidden"
