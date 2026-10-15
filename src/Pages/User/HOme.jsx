@@ -459,7 +459,7 @@ const HOme = () => {
             className="absolute inset-0 opacity-[0.03]"
             style={{
               backgroundImage: `radial-gradient(circle,${C.primary} 1px,transparent 1px)`,
-              backgroundSize: '28px 28px',
+              backgroundSize: '24px 24px',
             }}
           />
           <div
