@@ -705,6 +705,42 @@ const HOme = () => {
         </motion.div>
       </section>
 
+      {/* ══ TRENDING TICKER ═══════════════════════════════════ */}
+      <div
+        className="py-3 overflow-hidden border-y"
+        style={{ background: C.primary, borderColor: '#4d1c28' }}
+      >
+        <motion.div
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
+          className="flex gap-8 whitespace-nowrap"
+        >
+          {[...Array(2)].map((_, rep) => (
+            <div key={rep} className="flex gap-8 items-center">
+              {[
+                '📚 Atomic Habits',
+                '⭐ Top Rated 2026',
+                '🔥 The Midnight Library',
+                '💎 Dune Series',
+                '🌟 New Arrivals Weekly',
+                '🏆 Award Winners',
+                '🎯 Staff Picks',
+                '📖 Reading Challenge',
+              ].map((item, i) => (
+                <span
+                  key={i}
+                  className="text-xs font-bold tracking-widest uppercase flex items-center gap-2"
+                  style={{ color: 'rgba(248,245,239,0.8)' }}
+                >
+                  {item}
+                  <span style={{ color: '#C9A227', opacity: 0.5 }}>✦</span>
+                </span>
+              ))}
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
       {/* ══ STATS BANNER ════════════════════════════════════ */}
       <section
         className="py-14 border-y"
