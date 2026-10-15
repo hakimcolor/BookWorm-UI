@@ -1453,6 +1453,117 @@ const HOme = () => {
         </div>
       </section>
 
+      {/* ══ READING CHALLENGE ════════════════════════════════ */}
+      <section className="py-24 max-w-7xl mx-auto px-6">
+        <motion.div
+          {...sF()}
+          className="rounded-3xl overflow-hidden relative"
+          style={{
+            background: `linear-gradient(135deg,${C.teal}22 0%,${C.gold}18 100%)`,
+            border: `1px solid ${C.teal}33`,
+          }}
+        >
+          <div className="p-12 grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <span
+                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6"
+                style={{
+                  background: `${C.teal}22`,
+                  color: C.teal,
+                  border: `1px solid ${C.teal}44`,
+                }}
+              >
+                <FaRocket size={10} /> Reading Challenge 2026
+              </span>
+              <h2
+                className="text-4xl font-black mb-4"
+                style={{ fontFamily: 'Playfair Display,serif', color: C.text }}
+              >
+                Read 12 Books This Year
+              </h2>
+              <p
+                className="text-base leading-relaxed mb-6"
+                style={{ color: C.muted }}
+              >
+                Join thousands of readers in our annual reading challenge. Pick
+                your goal, track your progress, and unlock exclusive badges.
+              </p>
+              <div className="flex gap-4 flex-wrap">
+                <Link
+                  to="/browsebookspage"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm cursor-pointer transition-all hover:-translate-y-0.5"
+                  style={{ background: C.teal, color: '#fff' }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background = '#12a882')
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background = C.teal)
+                  }
+                >
+                  <FaRocket size={12} /> Join the Challenge
+                </Link>
+                <Link
+                  to="/browsebookspage"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm cursor-pointer"
+                  style={{ border: `2px solid ${C.teal}`, color: C.teal }}
+                >
+                  Learn More <FaArrowRight size={11} />
+                </Link>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                {
+                  value: '12',
+                  label: 'Books / Year',
+                  icon: '📚',
+                  color: C.teal,
+                },
+                {
+                  value: '52',
+                  label: 'Weeks to Read',
+                  icon: '📅',
+                  color: C.gold,
+                },
+                {
+                  value: '3K+',
+                  label: 'Challengers',
+                  icon: '🏆',
+                  color: C.orange,
+                },
+                {
+                  value: '100+',
+                  label: 'Badges to Win',
+                  icon: '🎖️',
+                  color: C.purple,
+                },
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  {...sF(i * 0.08)}
+                  className="p-5 rounded-2xl text-center"
+                  style={{
+                    background: C.card,
+                    border: `1px solid ${C.border}`,
+                  }}
+                >
+                  <p className="text-3xl mb-1">{stat.icon}</p>
+                  <p
+                    className="text-2xl font-black"
+                    style={{ color: stat.color }}
+                  >
+                    {stat.value}
+                  </p>
+                  <p className="text-xs" style={{ color: C.muted }}>
+                    {stat.label}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* ══ NEWSLETTER ══════════════════════════════════════ */}
       <section
         className="py-24 relative overflow-hidden"
