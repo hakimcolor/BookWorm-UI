@@ -565,7 +565,7 @@ const HOme = () => {
                   e.currentTarget.style.color = C.primary;
                 }}
               >
-                Discover Bestsellers <FaArrowRight size={12} />
+                Browse Bestsellers <FaArrowRight size={12} />
               </Link>
             </motion.div>
             <motion.div
