@@ -846,7 +846,7 @@ const HOme = () => {
                 Explore Our Vast Library
               </h3>
               <p className="text-sm text-white/70 mt-1">
-                Over 10,000 titles across every genre
+                Over 12,000 titles across every genre
               </p>
             </div>
           </motion.div>
