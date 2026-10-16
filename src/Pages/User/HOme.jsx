@@ -719,7 +719,7 @@ const HOme = () => {
             <div key={rep} className="flex gap-8 items-center">
               {[
                 '📚 Atomic Habits',
-                '⭐ Top Rated 2026',
+                '⭐ Top Rated Books',
                 '🔥 The Midnight Library',
                 '💎 Dune Series',
                 '🌟 New Arrivals Weekly',
