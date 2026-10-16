@@ -759,7 +759,7 @@ const HOme = () => {
             },
             {
               icon: <FaUsers size={28} />,
-              value: '50,000+',
+              value: '75,000+',
               label: 'Happy Readers',
               color: C.teal,
             },
