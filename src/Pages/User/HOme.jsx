@@ -490,7 +490,7 @@ const HOme = () => {
               }}
             >
               <HiSparkles size={11} style={{ color: C.gold }} />
-              Your Next Chapter Starts Here
+              Your Next Great Read Awaits
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
