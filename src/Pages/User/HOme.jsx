@@ -678,7 +678,7 @@ const HOme = () => {
                   Community
                 </p>
                 <p className="text-sm font-bold" style={{ color: C.text }}>
-                  5K+ Readers
+                  8K+ Readers
                 </p>
               </div>
             </motion.div>
