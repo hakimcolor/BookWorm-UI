@@ -523,7 +523,7 @@ const HOme = () => {
               style={{ color: C.muted }}
             >
               Explore inspiring reads, timeless classics, and the latest
-              bestsellers — all in one beautifully curated place.
+              bestsellers — all in one beautifully curated place, just for you.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 14 }}
