@@ -407,7 +407,7 @@ function BookCard({ book = {}, i = 0 }) {
           onMouseEnter={(e) => (e.currentTarget.style.background = C.accent1)}
           onMouseLeave={(e) => (e.currentTarget.style.background = C.primary)}
         >
-          <FaShoppingCart size={11} /> Add to Shelf
+          <FaShoppingCart size={11} /> Add to Library
         </button>
       </div>
     </motion.div>
