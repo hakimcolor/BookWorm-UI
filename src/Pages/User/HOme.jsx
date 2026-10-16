@@ -574,7 +574,7 @@ const HOme = () => {
               transition={{ delay: 0.55 }}
               className="flex gap-6 flex-wrap"
             >
-              {['10,000+ Books', 'Expert Curation', 'Free Returns'].map(
+              {['12,000+ Books', 'Expert Curation', 'Free Returns'].map(
                 (t, i) => (
                   <span
                     key={i}
