@@ -654,7 +654,7 @@ const HOme = () => {
               </div>
               <div>
                 <p className="text-xs" style={{ color: C.muted }}>
-                  Top Rated
+                  Editor's Pick
                 </p>
                 <p className="text-sm font-bold" style={{ color: C.text }}>
                   Best Picks
