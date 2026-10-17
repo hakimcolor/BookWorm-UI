@@ -566,7 +566,7 @@ const SignIn = () => {
                 to="/signup"
                 className="text-white font-semibold hover:text-white/70 transition-colors"
               >
-                Create one free
+                Join for free
               </NavLink>
             </p>
           </div>
