@@ -57,7 +57,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     const result = await Swal.fire({
       title: 'Logout?',
-      text: 'Are you sure you want to sign out?',
+      text: 'You will be logged out of your account.',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#6B2737',
