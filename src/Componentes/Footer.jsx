@@ -180,7 +180,7 @@ export default function Footer() {
               className="text-sm leading-relaxed mb-4"
               style={{ color: 'rgba(248,245,239,0.45)' }}
             >
-              Get the latest book recommendations and news in your inbox.
+              Get weekly book picks and reading tips delivered to your inbox.
             </p>
             <form onSubmit={(e) => e.preventDefault()} className="space-y-2">
               <input
