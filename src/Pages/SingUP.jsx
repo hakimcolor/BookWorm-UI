@@ -201,7 +201,7 @@ const SignUp = () => {
                 BookHub
               </h1>
               <p className="text-white/40 text-sm mt-2">
-                A universe of knowledge awaits
+                Thousands of books, one account
               </p>
             </div>
             <div className="w-full flex-1 flex items-center justify-center py-6">
