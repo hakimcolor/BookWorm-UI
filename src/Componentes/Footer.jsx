@@ -82,7 +82,7 @@ export default function Footer() {
               style={{ color: 'rgba(248,245,239,0.45)' }}
             >
               Your ultimate destination for discovering, reading, and sharing
-              amazing books. Join our community of passionate readers today.
+              amazing books. Join thousands of passionate readers today.
             </p>
             <div className="flex gap-3">
               {socials.map((s, i) => (
