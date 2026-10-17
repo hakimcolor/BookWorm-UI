@@ -425,7 +425,7 @@ const SignIn = () => {
               </h2>
               <p className="text-sm text-white/35 flex items-center justify-center gap-1">
                 <HiSparkles className="text-white/50" size={13} />
-                Sign in to continue your reading journey
+                Continue your reading adventure
                 <HiSparkles className="text-white/50" size={13} />
               </p>
             </div>
