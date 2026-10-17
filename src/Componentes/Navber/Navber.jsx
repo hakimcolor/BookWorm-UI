@@ -62,7 +62,7 @@ const Navbar = () => {
       showCancelButton: true,
       confirmButtonColor: '#6B2737',
       cancelButtonColor: '#777',
-      confirmButtonText: 'Yes, logout',
+      confirmButtonText: 'Yes, sign out',
       background: '#F8F5EF',
       color: '#242424',
     });
