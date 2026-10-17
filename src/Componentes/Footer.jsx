@@ -223,7 +223,7 @@ export default function Footer() {
             className="text-xs hidden sm:block"
             style={{ color: 'rgba(248,245,239,0.18)' }}
           >
-            Built with ❤️ for readers everywhere
+            Built with 📚 for readers everywhere
           </p>
           <div className="flex gap-6">
             {['Accessibility', 'Sitemap', 'Cookies'].map((l, i) => (
