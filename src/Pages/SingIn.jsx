@@ -148,7 +148,7 @@
 //   return (
 //     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-100 py-12 px-4 sm:px-6 lg:px-8">
 //       <Helmet>
-//         <title>Sign In | BookHub</title>
+//         <title>Sign In | BookWorm</title>
 //       </Helmet>
 //       <Toaster position="top-right" />
 
@@ -393,7 +393,7 @@ const SignIn = () => {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <Helmet>
-        <title>Sign In | BookHub</title>
+        <title>Sign In | BookWorm</title>
       </Helmet>
       <Toaster position="top-right" />
 
