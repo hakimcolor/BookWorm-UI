@@ -179,7 +179,7 @@ const SignUp = () => {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <Helmet>
-        <title>Sign Up | BookHub</title>
+        <title>Sign Up | BookWorm</title>
       </Helmet>
       <Toaster position="top-right" />
 
